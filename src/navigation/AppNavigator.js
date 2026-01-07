@@ -15,7 +15,7 @@ import {
   LayoutAnimation,
   UIManager,
 } from 'react-native';
-import { SvgXml } from 'react-native-svg';
+import Svg, { Circle, Path, Rect, SvgXml } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -24,7 +24,6 @@ import { LOGO_SVG } from '../constants/logoSvg';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-const SvgXmlSafe = typeof SvgXml === 'function' ? SvgXml : null;
 
 const MENU_ITEMS = [
   { key: 'Treningi', label: 'Treningi', icon: WorkoutsIcon },
@@ -49,74 +48,71 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 
 function WorkoutsIcon({ color }) {
   return (
-    <SvgIcon
-      width={24}
-      height={24}
-      xml={`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="9" width="4" height="6" rx="1.5" fill="${color}"/><rect x="18" y="9" width="4" height="6" rx="1.5" fill="${color}"/><rect x="6" y="10" width="12" height="4" rx="2" fill="${color}"/></svg>`}
-    />
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Rect x="2" y="9" width="4" height="6" rx="1.5" fill={color} />
+      <Rect x="18" y="9" width="4" height="6" rx="1.5" fill={color} />
+      <Rect x="6" y="10" width="12" height="4" rx="2" fill={color} />
+    </Svg>
   );
 }
 
 function LibraryIcon({ color }) {
   return (
-    <SvgIcon
-      width={24}
-      height={24}
-      xml={`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="6" height="16" rx="1.5" fill="${color}"/><rect x="10" y="6" width="4" height="14" rx="1.5" fill="${color}"/><rect x="15" y="5" width="6" height="15" rx="1.5" fill="${color}"/></svg>`}
-    />
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Rect x="3" y="4" width="6" height="16" rx="1.5" fill={color} />
+      <Rect x="10" y="6" width="4" height="14" rx="1.5" fill={color} />
+      <Rect x="15" y="5" width="6" height="15" rx="1.5" fill={color} />
+    </Svg>
   );
 }
 
 function HistoryIcon({ color }) {
   return (
-    <SvgIcon
-      width={24}
-      height={24}
-      xml={`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="${color}" stroke-width="2"/><path d="M12 7v5l4 2" stroke="${color}" stroke-width="2" stroke-linecap="round"/></svg>`}
-    />
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Circle cx="12" cy="12" r="8" stroke={color} strokeWidth="2" />
+      <Path d="M12 7v5l4 2" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    </Svg>
   );
 }
 
 function TimerIcon({ color }) {
   return (
-    <SvgIcon
-      width={24}
-      height={24}
-      xml={`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="13" r="7" stroke="${color}" stroke-width="2"/><rect x="9" y="3" width="6" height="3" rx="1" fill="${color}"/><path d="M12 13l3 2" stroke="${color}" stroke-width="2" stroke-linecap="round"/></svg>`}
-    />
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Circle cx="12" cy="13" r="7" stroke={color} strokeWidth="2" />
+      <Rect x="9" y="3" width="6" height="3" rx="1" fill={color} />
+      <Path d="M12 13l3 2" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    </Svg>
   );
 }
 
 function MetricsIcon({ color }) {
   return (
-    <SvgIcon
-      width={24}
-      height={24}
-      xml={`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 7c0-2 2-3 5-3s5 1 5 3-2 3-5 3-5-1-5-3Z" fill="${color}"/><rect x="6" y="10" width="12" height="10" rx="5" fill="${color}"/></svg>`}
-    />
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M7 7c0-2 2-3 5-3s5 1 5 3-2 3-5 3-5-1-5-3Z"
+        fill={color}
+      />
+      <Rect x="6" y="10" width="12" height="10" rx="5" fill={color} />
+    </Svg>
   );
 }
 
 function StatsIcon({ color }) {
   return (
-    <SvgIcon
-      width={24}
-      height={24}
-      xml={`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="12" width="3" height="8" rx="1" fill="${color}"/><rect x="10" y="8" width="3" height="12" rx="1" fill="${color}"/><rect x="16" y="5" width="3" height="15" rx="1" fill="${color}"/></svg>`}
-    />
+    <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Rect x="4" y="12" width="3" height="8" rx="1" fill={color} />
+      <Rect x="10" y="8" width="3" height="12" rx="1" fill={color} />
+      <Rect x="16" y="5" width="3" height="15" rx="1" fill={color} />
+    </Svg>
   );
 }
 
 function AppLogo() {
-  return <SvgIcon xml={LOGO_SVG} width={200} height={30} />;
-}
-
-function SvgIcon({ xml, width, height }) {
-  if (!SvgXmlSafe || !xml) {
-    return null;
+  if (typeof SvgXml !== 'function') {
+    return <Text style={styles.logoFallback}>LIFTNOTE</Text>;
   }
 
-  return <SvgXmlSafe xml={xml} width={width} height={height} />;
+  return <SvgXml xml={LOGO_SVG} width={200} height={30} />;
 }
 
 function ScreenLayout({ children }) {
@@ -793,5 +789,11 @@ const styles = StyleSheet.create({
   closeBtnText: {
     color: colors.text,
     fontWeight: '700',
+  },
+  logoFallback: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: 1,
   },
 });
