@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "lift-note-app",
+    "slug": "lift-note-app",
+    "version": "1.0.0",
+    "sdkVersion": "50.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"]
+  }
+}
