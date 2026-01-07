@@ -7,12 +7,6 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
   return (
     <ScreenLayout>
       <View style={styles.workoutInner}>
-        <View style={styles.historyIntro}>
-          <Text style={styles.historyDescription}>
-            Zapisuj sesje treningowe, ciezar, ilosc serii oraz powtorzen. Sledz regularnosc
-            i swoje postepy.
-          </Text>
-        </View>
         <Text style={styles.header}>Treningi</Text>
         <FlatList
           data={workouts}
