@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import colors from '../constants/colors';
 
@@ -87,10 +87,25 @@ function MenuItem({ label, icon: Icon, active, onPress }) {
 
 export default function AppNavigator() {
   const [activeKey, setActiveKey] = React.useState('workouts');
+  const scrollRef = useRef(null);
+  const scrollX = useRef(0);
   const activeLabel = useMemo(() => {
     const item = MENU_ITEMS.find((entry) => entry.key === activeKey);
     return item ? item.label : 'Treningi';
   }, [activeKey]);
+
+  const handleScroll = (event) => {
+    scrollX.current = event.nativeEvent.contentOffset.x;
+  };
+
+  const handleWheel = (event) => {
+    if (Platform.OS !== 'web' || !scrollRef.current) {
+      return;
+    }
+
+    const nextX = Math.max(0, scrollX.current + event.nativeEvent.deltaY);
+    scrollRef.current.scrollTo({ x: nextX, animated: false });
+  };
 
   return (
     <View style={styles.container}>
@@ -99,21 +114,25 @@ export default function AppNavigator() {
         <Text style={styles.subtitle}>Widok roboczy, nawigacja na dole.</Text>
       </View>
       <View style={styles.menuWrapper}>
-        <FlatList
+        <ScrollView
           horizontal
-          data={MENU_ITEMS}
-          keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.menuContent}
-          renderItem={({ item }) => (
+          ref={scrollRef}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          onWheel={handleWheel}
+        >
+          {MENU_ITEMS.map((item) => (
             <MenuItem
+              key={item.key}
               label={item.label}
               icon={item.icon}
               active={item.key === activeKey}
               onPress={() => setActiveKey(item.key)}
             />
-          )}
-        />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
