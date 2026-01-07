@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   finishBtn: {
+    marginBottom: 5,
     backgroundColor: 'transparent',
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: fonts.medium,
     fontSize: 12,
-    marginBottom: 5,
   },
   backButtonContainer: {
     marginTop: 6,
