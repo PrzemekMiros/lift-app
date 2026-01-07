@@ -203,15 +203,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 6,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#4a445f',
   },
   calendarDay: {
     width: 32,
     height: 32,
-    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#4a445f',
   },
   calendarDayMarked: {
     backgroundColor: colors.accent,
