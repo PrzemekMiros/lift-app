@@ -39,6 +39,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  cardTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 8,
+  },
+  cardDuration: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: '500',
+  },
   cardSub: {
     color: colors.muted,
     fontSize: 11,

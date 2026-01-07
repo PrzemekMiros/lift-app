@@ -1,6 +1,6 @@
 const colors = {
   background: '#332e45',
-  primary: '#95ff00ff',
+  primary: '#bfff00ff',
   accent: '#fb8800',
   error: '#8a0101',
   text: '#f2f0f5',

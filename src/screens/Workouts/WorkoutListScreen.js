@@ -3,6 +3,12 @@ import { View, Text, FlatList, TouchableOpacity, Alert, LayoutAnimation } from '
 import ScreenLayout from '../../components/common/ScreenLayout';
 import styles from './styles';
 
+function formatDuration(totalSeconds = 0) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}.${String(seconds).padStart(2, '0')} min`;
+}
+
 export default function WorkoutListScreen({ navigation, workouts, setWorkouts }) {
   return (
     <ScreenLayout>
@@ -27,7 +33,12 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
               }}
             >
               <View>
-                <Text style={styles.cardTitle}>{item.date}</Text>
+                <View style={styles.cardTop}>
+                  <Text style={styles.cardTitle}>{item.date}</Text>
+                  <Text style={styles.cardDuration}>
+                    {formatDuration(item.durationSeconds || 0)}
+                  </Text>
+                </View>
                 <Text style={styles.cardSub}>{item.exercises.length} cwiczen</Text>
               </View>
               <Text style={styles.cardArrow}>&gt;</Text>
@@ -44,6 +55,7 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
               id: Date.now(),
               date: new Date().toLocaleDateString('pl-PL'),
               exercises: [],
+              durationSeconds: 0,
             };
             setWorkouts([newWorkout, ...workouts]);
           }}
