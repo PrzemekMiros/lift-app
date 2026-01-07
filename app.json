@@ -5,7 +5,19 @@
     "version": "1.0.0",
     "sdkVersion": "50.0.0",
     "orientation": "portrait",
-    "platforms": ["ios", "android", "web"],
-    "assetBundlePatterns": ["**/*"]
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "03e36f3a-77f4-4c86-992a-94616eb613e1"
+      }
+    },
+    "owner": "przemekm"
   }
 }
