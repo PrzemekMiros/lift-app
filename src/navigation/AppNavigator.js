@@ -15,12 +15,11 @@ import {
   LayoutAnimation,
   UIManager,
 } from 'react-native';
-import Svg, { Circle, Path, Rect, SvgXml } from 'react-native-svg';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import colors from '../constants/colors';
-import { LOGO_SVG } from '../constants/logoSvg';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -107,20 +106,9 @@ function StatsIcon({ color }) {
   );
 }
 
-function AppLogo() {
-  if (typeof SvgXml !== 'function') {
-    return <Text style={styles.logoFallback}>LIFTNOTE</Text>;
-  }
-
-  return <SvgXml xml={LOGO_SVG} width={200} height={30} />;
-}
-
 function ScreenLayout({ children }) {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.logoWrap}>
-        <AppLogo />
-      </View>
       <View style={styles.screenContent}>{children}</View>
     </SafeAreaView>
   );
@@ -273,12 +261,6 @@ function WorkoutListScreen({ navigation, workouts, setWorkouts }) {
           )}
         />
       </View>
-      <View style={styles.historyIntro}>
-          <Text style={styles.historyDescription}>
-            Zapisuj sesje treningowe, ciezar, ilosc serii oraz powtorzen. Sledz regularnosc
-            i swoje postepy.
-          </Text>
-        </View>
       <TouchableOpacity
         style={styles.fab}
         onPress={() => {
@@ -631,12 +613,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  logoWrap: {
-    position: 'absolute',
-    top: 18,
-    left: 18,
-    zIndex: 2,
-  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 20,
@@ -864,11 +840,5 @@ const styles = StyleSheet.create({
   closeBtnText: {
     color: colors.text,
     fontWeight: '700',
-  },
-  logoFallback: {
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: '700',
-    letterSpacing: 1,
   },
 });
