@@ -20,16 +20,16 @@ export default function ExerciseLibraryScreen({
       }
       groups[group].push(name);
     });
-    return GROUP_ORDER.filter((group) => groups[group]?.length).map((group) => ({
+    return GROUP_ORDER.map((group) => ({
       title: group,
-      data: groups[group],
+      data: groups[group] || [],
     }));
-  }, [exerciseDb]);
+  }, [exerciseDb, exerciseGroups]);
 
   return (
     <ScreenLayout>
       <View style={styles.workoutInner}>
-        <Text style={styles.header}>Baza cwiczen</Text>
+        <Text style={styles.header}>Baza ćwiczen</Text>
         <FlatList
           data={grouped}
           keyExtractor={(item) => item.title}
@@ -58,48 +58,82 @@ function renderGroupIcon(group) {
     case 'Klatka':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Rect x="3" y="6" width="8" height="14" rx="2" fill={color} />
-          <Rect x="15" y="6" width="8" height="14" rx="2" fill={color} />
+          <Rect x="2" y="10" width="4" height="6" rx="1" stroke={color} strokeWidth="2" />
+          <Rect x="20" y="10" width="4" height="6" rx="1" stroke={color} strokeWidth="2" />
+          <Rect x="7" y="11" width="12" height="4" rx="2" stroke={color} strokeWidth="2" />
+          <Path d="M9 9c2-1.5 6-1.5 8 0" stroke={color} strokeWidth="2" strokeLinecap="round" />
         </Svg>
       );
     case 'Plecy':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Path d="M4 6h18v6l-9 8-9-8V6z" fill={color} />
+          <Path
+            d="M6 6c2 2 3 4 3 7s-1 5-3 7M20 6c-2 2-3 4-3 7s1 5 3 7"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <Path d="M13 6v14" stroke={color} strokeWidth="2" strokeLinecap="round" />
         </Svg>
       );
     case 'Barki':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Circle cx="8" cy="13" r="5" fill={color} />
-          <Circle cx="18" cy="13" r="5" fill={color} />
+          <Path d="M6 16c0-3 2-5 5-5" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path d="M20 16c0-3-2-5-5-5" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Circle cx="6" cy="17" r="3" stroke={color} strokeWidth="2" />
+          <Circle cx="20" cy="17" r="3" stroke={color} strokeWidth="2" />
         </Svg>
       );
     case 'Biceps':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Path d="M6 18c0-4 3-7 7-7h5v6a5 5 0 0 1-5 5H9a3 3 0 0 1-3-3z" fill={color} />
+          <Path
+            d="M7 18c0-4 3-7 7-7h2v4M16 15c0 3-2 5-5 5H9a2 2 0 0 1-2-2"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <Circle cx="16" cy="10" r="2" stroke={color} strokeWidth="2" />
         </Svg>
       );
     case 'Triceps':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Path d="M7 6h12v14H7z" fill={color} />
+          <Path
+            d="M8 7h8l3 6-3 6H8l-2-6 2-6z"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <Path d="M11 10h4" stroke={color} strokeWidth="2" strokeLinecap="round" />
         </Svg>
       );
     case 'Nogi':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Rect x="6" y="4" width="6" height="18" rx="2" fill={color} />
-          <Rect x="14" y="4" width="6" height="18" rx="2" fill={color} />
+          <Path d="M8 6v10l-2 4" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path d="M18 6v10l2 4" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path d="M6 20h6" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path d="M14 20h6" stroke={color} strokeWidth="2" strokeLinecap="round" />
         </Svg>
       );
     case 'Brzuch':
       return (
         <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
-          <Rect x="7" y="4" width="12" height="18" rx="3" fill={color} />
-          <Rect x="9" y="7" width="8" height="3" rx="1.5" fill="#2f2a40" />
-          <Rect x="9" y="12" width="8" height="3" rx="1.5" fill="#2f2a40" />
+          <Rect x="7" y="4" width="12" height="18" rx="3" stroke={color} strokeWidth="2" />
+          <Rect x="9" y="7" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
+          <Rect x="14" y="7" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
+          <Rect x="9" y="13" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
+          <Rect x="14" y="13" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
+        </Svg>
+      );
+    case 'Inne':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Circle cx="13" cy="13" r="9" stroke={color} strokeWidth="2" />
+          <Path d="M13 8v10M8 13h10" stroke={color} strokeWidth="2" strokeLinecap="round" />
         </Svg>
       );
     default:

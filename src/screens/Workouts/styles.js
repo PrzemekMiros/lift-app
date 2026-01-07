@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   finishBtn: {
-    marginBottom: 10,
+    marginBottom: 12,
     backgroundColor: 'transparent',
     paddingVertical: 8,
     paddingHorizontal: 12,

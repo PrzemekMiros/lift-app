@@ -18,10 +18,10 @@ const Tab = createBottomTabNavigator();
 
 const MENU_ITEMS = [
   { key: 'Treningi', label: 'Treningi', icon: WorkoutsIcon },
-  { key: 'Baza', label: 'Baza cwiczen', icon: LibraryIcon },
+  { key: 'Baza', label: 'Baza ćwiczen', icon: LibraryIcon },
   { key: 'Historia', label: 'Historia', icon: HistoryIcon },
   { key: 'Timery', label: 'Timery', icon: TimerIcon },
-  { key: 'Metryki', label: 'Metryki ciala', icon: MetricsIcon },
+  { key: 'Metryki', label: 'Metryki ciała', icon: MetricsIcon },
   { key: 'Statystyki', label: 'Statystyki', icon: StatsIcon },
 ];
 

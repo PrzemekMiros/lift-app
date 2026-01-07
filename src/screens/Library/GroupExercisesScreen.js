@@ -26,7 +26,7 @@ export default function GroupExercisesScreen({
     <ScreenLayout>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={workoutStyles.backButtonContainer}>
-          <Text style={workoutStyles.backLink}>&lt;- Baza cwiczen</Text>
+          <Text style={workoutStyles.backLink}>&lt;- Baza ćwiczen</Text>
         </TouchableOpacity>
         <Text style={workoutStyles.header}>{group}</Text>
         <View style={styles.addRow}>
