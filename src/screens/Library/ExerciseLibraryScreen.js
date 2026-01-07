@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import styles from '../Workouts/styles';
 import colors from '../../constants/colors';
 import { DEFAULT_EXERCISES, EXERCISE_GROUPS, GROUP_ORDER } from '../../constants/exercises';
 
-export default function ExerciseLibraryScreen({ exerciseDb, setExerciseDb }) {
+export default function ExerciseLibraryScreen({ navigation, exerciseDb, setExerciseDb }) {
   const [newDbEx, setNewDbEx] = useState('');
   const grouped = useMemo(() => {
     const groups = {};
@@ -46,51 +46,28 @@ export default function ExerciseLibraryScreen({ exerciseDb, setExerciseDb }) {
             <Text style={styles.addSmallText}>+</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView contentContainerStyle={localStyles.listContent} showsVerticalScrollIndicator={false}>
-          {grouped.map((group) => (
-            <View key={group.title} style={localStyles.groupSection}>
-              <Text style={localStyles.groupTitle}>{group.title}</Text>
-              <FlatList
-                data={group.data}
-                keyExtractor={(item) => item}
-                numColumns={3}
-                scrollEnabled={false}
-                columnWrapperStyle={localStyles.gridRow}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={localStyles.tile}
-                    onLongPress={() => {
-                      if (!DEFAULT_EXERCISES.includes(item)) {
-                        setExerciseDb(exerciseDb.filter((exercise) => exercise !== item));
-                      }
-                    }}
-                  >
-                    <Text style={localStyles.tileText} numberOfLines={2}>
-                      {item}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-          ))}
-        </ScrollView>
+        <FlatList
+          data={grouped}
+          keyExtractor={(item) => item.title}
+          numColumns={3}
+          columnWrapperStyle={localStyles.gridRow}
+          contentContainerStyle={localStyles.listContent}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={localStyles.tile}
+              onPress={() => navigation.navigate('GroupExercises', { group: item.title })}
+            >
+              <Text style={localStyles.tileTitle}>{item.title}</Text>
+              <Text style={localStyles.tileMeta}>{item.data.length} cwiczen</Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     </ScreenLayout>
   );
 }
 
 const localStyles = StyleSheet.create({
-  groupSection: {
-    marginBottom: 16,
-  },
-  groupTitle: {
-    color: colors.muted,
-    fontSize: 12,
-    fontWeight: '500',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
   gridRow: {
     gap: 10,
   },
@@ -101,16 +78,22 @@ const localStyles = StyleSheet.create({
     flex: 1,
     aspectRatio: 1,
     backgroundColor: '#3a3450',
-    borderRadius: 10,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: '#4a445f',
     padding: 10,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  tileText: {
+  tileTitle: {
     color: colors.text,
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '500',
     textAlign: 'center',
+  },
+  tileMeta: {
+    color: colors.muted,
+    fontSize: 10,
+    marginTop: 6,
   },
 });

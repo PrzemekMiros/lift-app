@@ -9,10 +9,10 @@ import { DEFAULT_EXERCISES } from '../constants/exercises';
 import ScreenLayout from '../components/common/ScreenLayout';
 import WorkoutsStack from './WorkoutsStack';
 import HistoryScreen from '../screens/History/HistoryScreen';
-import ExerciseLibraryScreen from '../screens/Library/ExerciseLibraryScreen';
 import TimersScreen from '../screens/Timers/TimersScreen';
 import StatsScreen from '../screens/Stats/StatsScreen';
 import MetricsScreen from '../screens/Metrics/MetricsScreen';
+import LibraryStack from './LibraryStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -187,11 +187,7 @@ export default function TabNavigator() {
       </Tab.Screen>
       <Tab.Screen name="Baza">
         {(props) => (
-          <ExerciseLibraryScreen
-            {...props}
-            exerciseDb={exerciseDb}
-            setExerciseDb={setExerciseDb}
-          />
+          <LibraryStack {...props} exerciseDb={exerciseDb} setExerciseDb={setExerciseDb} />
         )}
       </Tab.Screen>
       <Tab.Screen name="Historia" component={HistoryScreen} />
