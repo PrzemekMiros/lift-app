@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import colors from '../constants/colors';
 
@@ -99,21 +99,21 @@ export default function AppNavigator() {
         <Text style={styles.subtitle}>Widok roboczy, nawigacja na dole.</Text>
       </View>
       <View style={styles.menuWrapper}>
-        <ScrollView
+        <FlatList
           horizontal
+          data={MENU_ITEMS}
+          keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.menuContent}
-        >
-          {MENU_ITEMS.map((item) => (
+          renderItem={({ item }) => (
             <MenuItem
-              key={item.key}
               label={item.label}
               icon={item.icon}
               active={item.key === activeKey}
               onPress={() => setActiveKey(item.key)}
             />
-          ))}
-        </ScrollView>
+          )}
+        />
       </View>
     </View>
   );
@@ -148,11 +148,12 @@ const styles = StyleSheet.create({
   },
   menuContent: {
     paddingHorizontal: 16,
-    gap: 16,
+    paddingRight: 32,
   },
   menuItem: {
     width: 96,
     alignItems: 'center',
+    marginRight: 16,
   },
   iconWrap: {
     width: 40,
