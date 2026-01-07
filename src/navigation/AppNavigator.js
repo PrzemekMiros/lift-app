@@ -194,6 +194,54 @@ function PlaceholderScreen({ label }) {
   );
 }
 
+function ExerciseLibraryScreen({ exerciseDb, setExerciseDb }) {
+  const [newDbEx, setNewDbEx] = useState('');
+
+  return (
+    <ScreenLayout>
+      <View style={styles.workoutInner}>
+        <Text style={styles.header}>Baza cwiczen</Text>
+        <View style={styles.row}>
+          <TextInput
+            style={[styles.input, styles.modalInput]}
+            placeholder="Nowe..."
+            placeholderTextColor={colors.muted}
+            value={newDbEx}
+            onChangeText={setNewDbEx}
+          />
+          <TouchableOpacity
+            style={styles.addSmall}
+            onPress={() => {
+              if (newDbEx && !exerciseDb.includes(newDbEx)) {
+                setExerciseDb([...exerciseDb, newDbEx]);
+                setNewDbEx('');
+              }
+            }}
+          >
+            <Text style={styles.addSmallText}>+</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={exerciseDb}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.dbItem}
+              onLongPress={() => {
+                if (!DEFAULT_EXERCISES.includes(item)) {
+                  setExerciseDb(exerciseDb.filter((exercise) => exercise !== item));
+                }
+              }}
+            >
+              <Text style={styles.dbItemText}>{item}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    </ScreenLayout>
+  );
+}
+
 function WorkoutListScreen({ navigation, workouts, setWorkouts }) {
   return (
     <ScreenLayout>
@@ -462,9 +510,8 @@ function ExerciseScreen({
   );
 }
 
-function WorkoutsStackScreen() {
+function WorkoutsStackScreen({ exerciseDb, setExerciseDb }) {
   const [workouts, setWorkouts] = useState([]);
-  const [exerciseDb, setExerciseDb] = useState(DEFAULT_EXERCISES);
   const [showDbModal, setShowDbModal] = useState(false);
   const [newDbEx, setNewDbEx] = useState('');
   const [reps, setReps] = useState('');
@@ -474,12 +521,8 @@ function WorkoutsStackScreen() {
     const loadData = async () => {
       try {
         const savedWorkouts = await AsyncStorage.getItem('workouts_v3');
-        const savedDb = await AsyncStorage.getItem('ex_db_v3');
         if (savedWorkouts) {
           setWorkouts(JSON.parse(savedWorkouts));
-        }
-        if (savedDb) {
-          setExerciseDb(JSON.parse(savedDb));
         }
       } catch (error) {
         console.error('Load error', error);
@@ -490,8 +533,7 @@ function WorkoutsStackScreen() {
 
   useEffect(() => {
     AsyncStorage.setItem('workouts_v3', JSON.stringify(workouts));
-    AsyncStorage.setItem('ex_db_v3', JSON.stringify(exerciseDb));
-  }, [workouts, exerciseDb]);
+  }, [workouts]);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -533,13 +575,49 @@ function WorkoutsStackScreen() {
 }
 
 export default function AppNavigator() {
+  const [exerciseDb, setExerciseDb] = useState(DEFAULT_EXERCISES);
+
+  useEffect(() => {
+    const loadDb = async () => {
+      try {
+        const savedDb = await AsyncStorage.getItem('ex_db_v3');
+        if (savedDb) {
+          setExerciseDb(JSON.parse(savedDb));
+        }
+      } catch (error) {
+        console.error('Load error', error);
+      }
+    };
+    loadDb();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('ex_db_v3', JSON.stringify(exerciseDb));
+  }, [exerciseDb]);
+
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
       tabBar={(props) => <BottomMenuBar {...props} />}
     >
-      <Tab.Screen name="Treningi" component={WorkoutsStackScreen} />
-      <Tab.Screen name="Baza" children={() => <PlaceholderScreen label="Baza cwiczen" />} />
+      <Tab.Screen name="Treningi">
+        {(props) => (
+          <WorkoutsStackScreen
+            {...props}
+            exerciseDb={exerciseDb}
+            setExerciseDb={setExerciseDb}
+          />
+        )}
+      </Tab.Screen>
+      <Tab.Screen name="Baza">
+        {(props) => (
+          <ExerciseLibraryScreen
+            {...props}
+            exerciseDb={exerciseDb}
+            setExerciseDb={setExerciseDb}
+          />
+        )}
+      </Tab.Screen>
       <Tab.Screen name="Historia" children={() => <PlaceholderScreen label="Historia" />} />
       <Tab.Screen name="Timery" children={() => <PlaceholderScreen label="Timery" />} />
       <Tab.Screen name="Metryki" children={() => <PlaceholderScreen label="Metryki ciala" />} />
@@ -555,8 +633,8 @@ const styles = StyleSheet.create({
   },
   logoWrap: {
     position: 'absolute',
-    top: 12,
-    left: 12,
+    top: 18,
+    left: 18,
     zIndex: 2,
   },
   screenContent: {
@@ -590,18 +668,15 @@ const styles = StyleSheet.create({
     paddingRight: 32,
   },
   menuItem: {
-    width: 96,
+    width: 76,
     alignItems: 'center',
     marginRight: 16,
   },
   iconWrap: {
     width: 40,
     height: 40,
-    borderRadius: 12,
-    backgroundColor: '#2f2a40',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 6,
   },
   menuLabel: {
     fontSize: 12,
