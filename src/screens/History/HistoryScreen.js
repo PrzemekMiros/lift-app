@@ -207,9 +207,11 @@ const styles = StyleSheet.create({
   calendarDay: {
     width: 32,
     height: 32,
-    borderRadius: 16,
+    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#4a445f',
   },
   calendarDayMarked: {
     backgroundColor: colors.accent,

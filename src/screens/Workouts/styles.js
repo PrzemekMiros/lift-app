@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: fonts.medium,
     fontSize: 12,
+    marginBottom: 5,
   },
   backButtonContainer: {
     marginTop: 6,
@@ -83,8 +84,8 @@ const styles = StyleSheet.create({
   },
   bottomAction: {
     position: 'absolute',
-    left: 20,
-    right: 20,
+    left: 0,
+    right: 0,
     bottom: 18,
   },
   bottomButton: {

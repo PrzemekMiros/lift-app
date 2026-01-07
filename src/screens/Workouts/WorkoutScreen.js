@@ -69,7 +69,7 @@ export default function WorkoutScreen({
               navigation.goBack();
             }}
           >
-            <Text style={styles.finishBtnText}>Zakoncz</Text>
+            <Text style={styles.finishBtnText}>Zakończ</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.outlineBtn} onPress={() => setShowDbModal(true)}>
