@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   backLink: {
-    color: colors.accent,
+    color: colors.primary,
     fontWeight: '500',
     fontSize: 14,
   },
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   cardArrow: {
-    color: colors.accent,
+    color: colors.primary,
   },
   listContent: {
     paddingBottom: 120,
@@ -70,14 +70,14 @@ const styles = StyleSheet.create({
   outlineBtn: {
     borderStyle: 'dashed',
     borderWidth: 1,
-    borderColor: colors.accent,
+    borderColor: colors.primary,
     padding: 15,
     borderRadius: 12,
     marginBottom: 16,
     alignItems: 'center',
   },
   outlineBtnText: {
-    color: colors.accent,
+    color: colors.primary,
     fontWeight: '500',
   },
   input: {
