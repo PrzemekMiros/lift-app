@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 import colors from '../../constants/colors';
+import { fonts } from '../../constants/theme';
 
 const styles = StyleSheet.create({
   workoutInner: {
     flex: 1,
   },
   header: {
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 22,
+    fontWeight: '500',
+    fontFamily: fonts.medium,
     color: colors.text,
     marginBottom: 12,
   },
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
   },
   backLink: {
     color: colors.accent,
-    fontWeight: '600',
+    fontWeight: '500',
     fontSize: 14,
   },
   card: {
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     color: colors.text,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   cardSub: {
     color: colors.muted,
@@ -44,21 +46,26 @@ const styles = StyleSheet.create({
   cardArrow: {
     color: colors.accent,
   },
-  fab: {
+  listContent: {
+    paddingBottom: 120,
+  },
+  bottomAction: {
     position: 'absolute',
-    bottom: 30,
+    left: 20,
     right: 20,
-    width: 60,
-    height: 60,
+    bottom: 18,
+  },
+  bottomButton: {
     backgroundColor: colors.accent,
-    borderRadius: 30,
-    justifyContent: 'center',
+    borderRadius: 14,
+    paddingVertical: 14,
     alignItems: 'center',
   },
-  fabText: {
-    fontSize: 32,
+  bottomButtonText: {
     color: '#201c2b',
-    fontWeight: '600',
+    fontWeight: '500',
+    fontFamily: fonts.medium,
+    fontSize: 14,
   },
   outlineBtn: {
     borderStyle: 'dashed',
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
   },
   outlineBtnText: {
     color: colors.accent,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   input: {
     backgroundColor: '#3a3450',
@@ -100,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addBtnText: {
-    fontWeight: '600',
+    fontWeight: '500',
     color: '#201c2b',
   },
   setRow: {
@@ -116,11 +123,11 @@ const styles = StyleSheet.create({
   },
   setText: {
     color: colors.muted,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   setVal: {
     color: colors.text,
-    fontWeight: '600',
+    fontWeight: '500',
     fontSize: 16,
   },
   removeText: {
@@ -163,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addSmallText: {
-    fontWeight: '700',
+    fontWeight: '500',
     color: '#201c2b',
     fontSize: 18,
   },
@@ -176,7 +183,7 @@ const styles = StyleSheet.create({
   },
   closeBtnText: {
     color: colors.text,
-    fontWeight: '700',
+    fontWeight: '500',
   },
 });
 

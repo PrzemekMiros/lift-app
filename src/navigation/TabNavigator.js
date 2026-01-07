@@ -4,6 +4,7 @@ import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import colors from '../constants/colors';
+import { fonts } from '../constants/theme';
 import { DEFAULT_EXERCISES } from '../constants/exercises';
 import ScreenLayout from '../components/common/ScreenLayout';
 import WorkoutsStack from './WorkoutsStack';
@@ -83,7 +84,7 @@ function StatsIcon({ color }) {
 }
 
 function MenuItem({ label, icon: Icon, active, onPress }) {
-  const color = active ? colors.primary : colors.muted;
+  const color = colors.accent;
 
   return (
     <Pressable style={styles.menuItem} onPress={onPress}>
@@ -205,9 +206,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     color: colors.text,
-    fontWeight: '700',
+    fontWeight: '500',
+    fontFamily: fonts.medium,
     marginBottom: 8,
   },
   subtitle: {
@@ -240,6 +242,6 @@ const styles = StyleSheet.create({
   },
   menuLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
 });

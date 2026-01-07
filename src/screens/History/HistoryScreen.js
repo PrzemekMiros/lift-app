@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import colors from '../../constants/colors';
+import { fonts } from '../../constants/theme';
 
 const WEEKDAYS = ['Pn', 'Wt', 'Sr', 'Cz', 'Pt', 'So', 'Nd'];
 const MONTHS = [
@@ -151,8 +152,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    fontSize: 28,
-    fontWeight: '600',
+    fontSize: 22,
+    fontWeight: '500',
+    fontFamily: fonts.medium,
     color: colors.text,
     marginBottom: 15,
   },
@@ -165,7 +167,8 @@ const styles = StyleSheet.create({
   calendarTitle: {
     color: colors.text,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   calendarNav: {
     width: 32,
@@ -177,7 +180,8 @@ const styles = StyleSheet.create({
   },
   calendarNavText: {
     color: colors.text,
-    fontWeight: '700',
+    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   calendarWeekRow: {
     flexDirection: 'row',
@@ -213,7 +217,8 @@ const styles = StyleSheet.create({
   calendarDayText: {
     color: colors.text,
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   calendarDayTextMarked: {
     color: colors.background,

@@ -11,6 +11,7 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
         <FlatList
           data={workouts}
           keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.listContent}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.card}
@@ -34,20 +35,22 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
           )}
         />
       </View>
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => {
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-          const newWorkout = {
-            id: Date.now(),
-            date: new Date().toLocaleDateString('pl-PL'),
-            exercises: [],
-          };
-          setWorkouts([newWorkout, ...workouts]);
-        }}
-      >
-        <Text style={styles.fabText}>+</Text>
-      </TouchableOpacity>
+      <View style={styles.bottomAction}>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={() => {
+            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            const newWorkout = {
+              id: Date.now(),
+              date: new Date().toLocaleDateString('pl-PL'),
+              exercises: [],
+            };
+            setWorkouts([newWorkout, ...workouts]);
+          }}
+        >
+          <Text style={styles.bottomButtonText}>Dodaj trening</Text>
+        </TouchableOpacity>
+      </View>
     </ScreenLayout>
   );
 }
