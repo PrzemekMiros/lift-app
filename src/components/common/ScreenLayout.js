@@ -1,21 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { SafeAreaView, View, StyleSheet, Animated } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import colors from '../../constants/colors';
 
 export default function ScreenLayout({ children }) {
-  const opacity = useRef(new Animated.Value(1)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      opacity.setValue(0);
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 160,
-        useNativeDriver: true,
-      }).start();
-    }, [opacity]),
-  );
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 160,
+      useNativeDriver: true,
+    }).start();
+  }, [opacity]);
 
   return (
     <SafeAreaView style={styles.container}>
