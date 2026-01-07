@@ -19,6 +19,7 @@ import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFocusEffect } from '@react-navigation/native';
 import colors from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
@@ -31,6 +32,22 @@ const MENU_ITEMS = [
   { key: 'Timery', label: 'Timery', icon: TimerIcon },
   { key: 'Metryki', label: 'Metryki ciala', icon: MetricsIcon },
   { key: 'Statystyki', label: 'Statystyki', icon: StatsIcon },
+];
+
+const WEEKDAYS = ['Pn', 'Wt', 'Sr', 'Cz', 'Pt', 'So', 'Nd'];
+const MONTHS = [
+  'Styczen',
+  'Luty',
+  'Marzec',
+  'Kwiecien',
+  'Maj',
+  'Czerwiec',
+  'Lipiec',
+  'Sierpien',
+  'Wrzesien',
+  'Pazdziernik',
+  'Listopad',
+  'Grudzien',
 ];
 
 const DEFAULT_EXERCISES = [
@@ -225,6 +242,128 @@ function ExerciseLibraryScreen({ exerciseDb, setExerciseDb }) {
             </TouchableOpacity>
           )}
         />
+      </View>
+    </ScreenLayout>
+  );
+}
+
+function parsePlDateToIso(dateStr) {
+  if (!dateStr) {
+    return null;
+  }
+  const parts = dateStr.split('.');
+  if (parts.length < 3) {
+    return null;
+  }
+  const [day, month, year] = parts.map((part) => part.trim());
+  if (!day || !month || !year) {
+    return null;
+  }
+  const dd = day.padStart(2, '0');
+  const mm = month.padStart(2, '0');
+  return `${year}-${mm}-${dd}`;
+}
+
+function getMonthMatrix(year, month) {
+  const firstDay = new Date(year, month, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const cells = Array(42).fill(null);
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    cells[startOffset + day - 1] = day;
+  }
+  return cells;
+}
+
+function HistoryScreen() {
+  const [monthCursor, setMonthCursor] = useState(() => new Date());
+  const [markedDates, setMarkedDates] = useState(new Set());
+
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+
+      const loadWorkouts = async () => {
+        try {
+          const savedWorkouts = await AsyncStorage.getItem('workouts_v3');
+          if (!savedWorkouts) {
+            if (isActive) {
+              setMarkedDates(new Set());
+            }
+            return;
+          }
+          const workouts = JSON.parse(savedWorkouts);
+          const nextMarked = new Set();
+          workouts.forEach((workout) => {
+            const iso = parsePlDateToIso(workout?.date);
+            if (iso) {
+              nextMarked.add(iso);
+            }
+          });
+          if (isActive) {
+            setMarkedDates(nextMarked);
+          }
+        } catch (error) {
+          console.error('Load error', error);
+        }
+      };
+
+      loadWorkouts();
+      return () => {
+        isActive = false;
+      };
+    }, []),
+  );
+
+  const year = monthCursor.getFullYear();
+  const month = monthCursor.getMonth();
+  const monthLabel = `${MONTHS[month]} ${year}`;
+  const cells = getMonthMatrix(year, month);
+
+  return (
+    <ScreenLayout>
+      <View style={styles.workoutInner}>
+        <Text style={styles.header}>Historia</Text>
+        <View style={styles.calendarHeader}>
+          <Pressable
+            style={styles.calendarNav}
+            onPress={() => setMonthCursor(new Date(year, month - 1, 1))}
+          >
+            <Text style={styles.calendarNavText}>{'<'}</Text>
+          </Pressable>
+          <Text style={styles.calendarTitle}>{monthLabel}</Text>
+          <Pressable
+            style={styles.calendarNav}
+            onPress={() => setMonthCursor(new Date(year, month + 1, 1))}
+          >
+            <Text style={styles.calendarNavText}>{'>'}</Text>
+          </Pressable>
+        </View>
+        <View style={styles.calendarWeekRow}>
+          {WEEKDAYS.map((label) => (
+            <Text key={label} style={styles.calendarWeekText}>
+              {label}
+            </Text>
+          ))}
+        </View>
+        <View style={styles.calendarGrid}>
+          {cells.map((day, index) => {
+            if (!day) {
+              return <View key={`empty-${index}`} style={styles.calendarCell} />;
+            }
+            const iso = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const marked = markedDates.has(iso);
+            return (
+              <View key={`day-${day}-${index}`} style={styles.calendarCell}>
+                <View style={[styles.calendarDay, marked && styles.calendarDayMarked]}>
+                  <Text style={[styles.calendarDayText, marked && styles.calendarDayTextMarked]}>
+                    {day}
+                  </Text>
+                </View>
+              </View>
+            );
+          })}
+        </View>
       </View>
     </ScreenLayout>
   );
@@ -600,7 +739,7 @@ export default function AppNavigator() {
           />
         )}
       </Tab.Screen>
-      <Tab.Screen name="Historia" children={() => <PlaceholderScreen label="Historia" />} />
+      <Tab.Screen name="Historia" component={HistoryScreen} />
       <Tab.Screen name="Timery" children={() => <PlaceholderScreen label="Timery" />} />
       <Tab.Screen name="Metryki" children={() => <PlaceholderScreen label="Metryki ciala" />} />
       <Tab.Screen name="Statystyki" children={() => <PlaceholderScreen label="Statystyki" />} />
@@ -669,6 +808,68 @@ const styles = StyleSheet.create({
     color: colors.muted,
     fontSize: 16,
     lineHeight: 21,
+  },
+  calendarHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  calendarTitle: {
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  calendarNav: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calendarNavText: {
+    color: colors.text,
+    fontWeight: '700',
+  },
+  calendarWeekRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  calendarWeekText: {
+    width: '14.285%',
+    textAlign: 'center',
+    color: colors.muted,
+    fontSize: 12,
+  },
+  calendarGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  calendarCell: {
+    width: '14.285%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 6,
+  },
+  calendarDay: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calendarDayMarked: {
+    backgroundColor: colors.accent,
+  },
+  calendarDayText: {
+    color: colors.text,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  calendarDayTextMarked: {
+    color: colors.background,
   },
   header: {
     fontSize: 28,
