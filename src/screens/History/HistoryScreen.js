@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
   },
   calendarDayMarked: {
     backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   calendarDayText: {
     color: colors.text,
