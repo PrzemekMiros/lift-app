@@ -1,18 +1,26 @@
-import React, { useMemo } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import colors from '../../constants/colors';
-import { DEFAULT_EXERCISES, EXERCISE_GROUPS } from '../../constants/exercises';
+import { DEFAULT_EXERCISES } from '../../constants/exercises';
 import workoutStyles from '../Workouts/styles';
 
-export default function GroupExercisesScreen({ navigation, route, exerciseDb, setExerciseDb }) {
+export default function GroupExercisesScreen({
+  navigation,
+  route,
+  exerciseDb,
+  setExerciseDb,
+  exerciseGroups,
+  setExerciseGroups,
+}) {
   const { group } = route.params;
+  const [newExercise, setNewExercise] = useState('');
   const exercises = useMemo(() => {
     return exerciseDb.filter((name) => {
-      const mapped = EXERCISE_GROUPS[name] || 'Inne';
+      const mapped = exerciseGroups[name] || 'Inne';
       return mapped === group;
     });
-  }, [exerciseDb, group]);
+  }, [exerciseDb, exerciseGroups, group]);
 
   return (
     <ScreenLayout>
@@ -21,6 +29,31 @@ export default function GroupExercisesScreen({ navigation, route, exerciseDb, se
           <Text style={workoutStyles.backLink}>&lt;- Baza cwiczen</Text>
         </TouchableOpacity>
         <Text style={workoutStyles.header}>{group}</Text>
+        <View style={styles.addRow}>
+          <TextInput
+            style={styles.input}
+            value={newExercise}
+            onChangeText={setNewExercise}
+            placeholder="Nowe cwiczenie..."
+            placeholderTextColor={colors.muted}
+          />
+          <TouchableOpacity
+            style={styles.addBtn}
+            onPress={() => {
+              const trimmed = newExercise.trim();
+              if (!trimmed) {
+                return;
+              }
+              if (!exerciseDb.includes(trimmed)) {
+                setExerciseDb([trimmed, ...exerciseDb]);
+              }
+              setExerciseGroups({ ...exerciseGroups, [trimmed]: group });
+              setNewExercise('');
+            }}
+          >
+            <Text style={styles.addBtnText}>Dodaj</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={exercises}
           keyExtractor={(item) => item}
@@ -31,6 +64,9 @@ export default function GroupExercisesScreen({ navigation, route, exerciseDb, se
               onLongPress={() => {
                 if (!DEFAULT_EXERCISES.includes(item)) {
                   setExerciseDb(exerciseDb.filter((exercise) => exercise !== item));
+                  const nextGroups = { ...exerciseGroups };
+                  delete nextGroups[item];
+                  setExerciseGroups(nextGroups);
                 }
               }}
             >
@@ -49,6 +85,34 @@ export default function GroupExercisesScreen({ navigation, route, exerciseDb, se
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  addRow: {
+    flexDirection: 'row',
+    columnGap: 10,
+    marginBottom: 12,
+  },
+  input: {
+    flex: 1,
+    backgroundColor: '#2b263a',
+    color: colors.text,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+  },
+  addBtn: {
+    backgroundColor: 'transparent',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.accent,
+    borderStyle: 'dashed',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addBtnText: {
+    color: colors.accent,
+    fontWeight: '500',
   },
   listContent: {
     paddingBottom: 24,

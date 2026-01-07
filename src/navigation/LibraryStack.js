@@ -5,7 +5,7 @@ import GroupExercisesScreen from '../screens/Library/GroupExercisesScreen';
 
 const Stack = createNativeStackNavigator();
 
-export default function LibraryStack({ exerciseDb, setExerciseDb }) {
+export default function LibraryStack({ exerciseDb, setExerciseDb, exerciseGroups, setExerciseGroups }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="LibraryHome">
@@ -14,6 +14,8 @@ export default function LibraryStack({ exerciseDb, setExerciseDb }) {
             {...props}
             exerciseDb={exerciseDb}
             setExerciseDb={setExerciseDb}
+            exerciseGroups={exerciseGroups}
+            setExerciseGroups={setExerciseGroups}
           />
         )}
       </Stack.Screen>
@@ -23,6 +25,8 @@ export default function LibraryStack({ exerciseDb, setExerciseDb }) {
             {...props}
             exerciseDb={exerciseDb}
             setExerciseDb={setExerciseDb}
+            exerciseGroups={exerciseGroups}
+            setExerciseGroups={setExerciseGroups}
           />
         )}
       </Stack.Screen>

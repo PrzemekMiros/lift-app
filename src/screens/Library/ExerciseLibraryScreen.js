@@ -1,17 +1,20 @@
-import React, { useMemo, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import Svg, { Path, Rect, Circle } from 'react-native-svg';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import styles from '../Workouts/styles';
 import colors from '../../constants/colors';
-import { DEFAULT_EXERCISES, EXERCISE_GROUPS, GROUP_ORDER } from '../../constants/exercises';
+import { GROUP_ORDER } from '../../constants/exercises';
 
-export default function ExerciseLibraryScreen({ navigation, exerciseDb, setExerciseDb }) {
-  const [newDbEx, setNewDbEx] = useState('');
+export default function ExerciseLibraryScreen({
+  navigation,
+  exerciseDb,
+  exerciseGroups,
+}) {
   const grouped = useMemo(() => {
     const groups = {};
     exerciseDb.forEach((name) => {
-      const group = EXERCISE_GROUPS[name] || 'Inne';
+      const group = exerciseGroups[name] || 'Inne';
       if (!groups[group]) {
         groups[group] = [];
       }
@@ -27,26 +30,6 @@ export default function ExerciseLibraryScreen({ navigation, exerciseDb, setExerc
     <ScreenLayout>
       <View style={styles.workoutInner}>
         <Text style={styles.header}>Baza cwiczen</Text>
-        <View style={styles.row}>
-          <TextInput
-            style={[styles.input, styles.modalInput]}
-            placeholder="Nowe..."
-            placeholderTextColor={colors.muted}
-            value={newDbEx}
-            onChangeText={setNewDbEx}
-          />
-          <TouchableOpacity
-            style={styles.addSmall}
-            onPress={() => {
-              if (newDbEx && !exerciseDb.includes(newDbEx)) {
-                setExerciseDb([...exerciseDb, newDbEx]);
-                setNewDbEx('');
-              }
-            }}
-          >
-            <Text style={styles.addSmallText}>+</Text>
-          </TouchableOpacity>
-        </View>
         <FlatList
           data={grouped}
           keyExtractor={(item) => item.title}

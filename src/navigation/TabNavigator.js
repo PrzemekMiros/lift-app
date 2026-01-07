@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import colors from '../constants/colors';
 import { fonts } from '../constants/theme';
-import { DEFAULT_EXERCISES } from '../constants/exercises';
+import { DEFAULT_EXERCISES, EXERCISE_GROUPS } from '../constants/exercises';
 import ScreenLayout from '../components/common/ScreenLayout';
 import WorkoutsStack from './WorkoutsStack';
 import HistoryScreen from '../screens/History/HistoryScreen';
@@ -156,13 +156,18 @@ function PlaceholderScreen({ label }) {
 
 export default function TabNavigator() {
   const [exerciseDb, setExerciseDb] = useState(DEFAULT_EXERCISES);
+  const [exerciseGroups, setExerciseGroups] = useState(EXERCISE_GROUPS);
 
   useEffect(() => {
     const loadDb = async () => {
       try {
         const savedDb = await AsyncStorage.getItem('ex_db_v3');
+        const savedGroups = await AsyncStorage.getItem('exercise_groups_v1');
         if (savedDb) {
           setExerciseDb(JSON.parse(savedDb));
+        }
+        if (savedGroups) {
+          setExerciseGroups(JSON.parse(savedGroups));
         }
       } catch (error) {
         console.error('Load error', error);
@@ -174,6 +179,10 @@ export default function TabNavigator() {
   useEffect(() => {
     AsyncStorage.setItem('ex_db_v3', JSON.stringify(exerciseDb));
   }, [exerciseDb]);
+
+  useEffect(() => {
+    AsyncStorage.setItem('exercise_groups_v1', JSON.stringify(exerciseGroups));
+  }, [exerciseGroups]);
 
   return (
     <Tab.Navigator
@@ -187,7 +196,13 @@ export default function TabNavigator() {
       </Tab.Screen>
       <Tab.Screen name="Baza">
         {(props) => (
-          <LibraryStack {...props} exerciseDb={exerciseDb} setExerciseDb={setExerciseDb} />
+          <LibraryStack
+            {...props}
+            exerciseDb={exerciseDb}
+            setExerciseDb={setExerciseDb}
+            exerciseGroups={exerciseGroups}
+            setExerciseGroups={setExerciseGroups}
+          />
         )}
       </Tab.Screen>
       <Tab.Screen name="Historia" component={HistoryScreen} />
