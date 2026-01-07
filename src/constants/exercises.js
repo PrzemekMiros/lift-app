@@ -1,17 +1,45 @@
 export const DEFAULT_EXERCISES = [
   'Wyciskanie sztangi na plaskiej',
+  'Wyciskanie hantli na skosie',
+  'Rozpietki na lawce',
   'Przysiad ze sztanga',
+  'Wykroki z hantlami',
+  'Prostowanie nog na maszynie',
   'Martwy ciag',
   'Podciaganie na drazku (szeroko)',
   'Wioslowanie sztanga w opadzie',
+  'Wioslowanie hantla',
+  'Wyciskanie zolnierskie',
+  'Unoszenie hantli bokiem',
+  'Uginanie ramion ze sztanga',
+  'Uginanie ramion z hantlami',
+  'Prostowanie ramion na wyciagu',
+  'Pompki na poreczach',
+  'Spiecia brzucha',
+  'Unoszenie nog w zwisie',
+  'Plank',
 ];
 
 export const EXERCISE_GROUPS = {
   'Wyciskanie sztangi na plaskiej': 'Klatka',
+  'Wyciskanie hantli na skosie': 'Klatka',
+  'Rozpietki na lawce': 'Klatka',
   'Podciaganie na drazku (szeroko)': 'Plecy',
   'Wioslowanie sztanga w opadzie': 'Plecy',
+  'Wioslowanie hantla': 'Plecy',
   'Przysiad ze sztanga': 'Nogi',
   'Martwy ciag': 'Nogi',
+  'Wykroki z hantlami': 'Nogi',
+  'Prostowanie nog na maszynie': 'Nogi',
+  'Wyciskanie zolnierskie': 'Barki',
+  'Unoszenie hantli bokiem': 'Barki',
+  'Uginanie ramion ze sztanga': 'Biceps',
+  'Uginanie ramion z hantlami': 'Biceps',
+  'Prostowanie ramion na wyciagu': 'Triceps',
+  'Pompki na poreczach': 'Triceps',
+  'Spiecia brzucha': 'Brzuch',
+  'Unoszenie nog w zwisie': 'Brzuch',
+  'Plank': 'Brzuch',
 };
 
-export const GROUP_ORDER = ['Klatka', 'Plecy', 'Barki', 'Biceps', 'Triceps', 'Nogi', 'Brzuch', 'Inne'];
+export const GROUP_ORDER = ['Klatka', 'Plecy', 'Barki', 'Biceps', 'Triceps', 'Nogi', 'Brzuch', 'Sztuki walki', 'Inne'];

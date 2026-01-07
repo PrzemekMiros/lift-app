@@ -29,7 +29,7 @@ export default function ExerciseLibraryScreen({
   return (
     <ScreenLayout>
       <View style={styles.workoutInner}>
-        <Text style={styles.header}>Baza ćwiczen</Text>
+        <Text style={styles.header}>Baza ćwiczeń</Text>
         <FlatList
           data={grouped}
           keyExtractor={(item) => item.title}
@@ -127,6 +127,15 @@ function renderGroupIcon(group) {
           <Rect x="14" y="7" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
           <Rect x="9" y="13" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
           <Rect x="14" y="13" width="3" height="4" rx="1" stroke={color} strokeWidth="2" />
+        </Svg>
+      );
+    case 'Sztuki walki':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Circle cx="13" cy="8" r="3" stroke={color} strokeWidth="2" />
+          <Path d="M13 11v8" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path d="M6 13h14" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path d="M9 22l4-6 4 6" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </Svg>
       );
     case 'Inne':

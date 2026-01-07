@@ -104,7 +104,7 @@ export default function WorkoutScreen({
       </View>
       <Modal visible={showDbModal} animationType="slide" transparent>
         <View style={styles.modalContent}>
-          <Text style={[styles.header, styles.modalHeader]}>Baza ćwiczen</Text>
+          <Text style={[styles.header, styles.modalHeader]}>Baza ćwiczeń</Text>
           <View style={[styles.row, styles.modalRow]}>
             <TextInput
               style={[styles.input, styles.modalInput]}
