@@ -230,18 +230,15 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   menuItem: {
-    width: 80,
+    width: 70,
     alignItems: 'center',
     marginRight: 10,
   },
   iconWrap: {
     width: 36,
     height: 36,
-    borderRadius: 10,
-    backgroundColor: '#2f2a40',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 4,
   },
   menuLabel: {
     fontSize: 12,

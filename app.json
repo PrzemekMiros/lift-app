@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "lift-note-app",
-    "slug": "lift-note-app",
+    "slug": "appnew",
     "version": "1.0.0",
     "sdkVersion": "50.0.0",
     "orientation": "portrait",
@@ -15,9 +15,12 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "03e36f3a-77f4-4c86-992a-94616eb613e1"
+        "projectId": "d70f9432-3bcb-4b75-8f36-763adbdd9866"
       }
     },
-    "owner": "przemekm"
+    "owner": "przemekm",
+    "android": {
+      "package": "com.przemekm.liftappnew"
+    }
   }
 }
