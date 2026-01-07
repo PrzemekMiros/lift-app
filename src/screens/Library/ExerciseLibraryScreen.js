@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import Svg, { Path, Rect, Circle } from 'react-native-svg';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import styles from '../Workouts/styles';
 import colors from '../../constants/colors';
@@ -57,6 +58,7 @@ export default function ExerciseLibraryScreen({ navigation, exerciseDb, setExerc
               style={localStyles.tile}
               onPress={() => navigation.navigate('GroupExercises', { group: item.title })}
             >
+              <View style={localStyles.iconWrap}>{renderGroupIcon(item.title)}</View>
               <Text style={localStyles.tileTitle}>{item.title}</Text>
               <Text style={localStyles.tileMeta}>{item.data.length} cwiczen</Text>
             </TouchableOpacity>
@@ -65,6 +67,65 @@ export default function ExerciseLibraryScreen({ navigation, exerciseDb, setExerc
       </View>
     </ScreenLayout>
   );
+}
+
+function renderGroupIcon(group) {
+  const color = colors.accent;
+  switch (group) {
+    case 'Klatka':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Rect x="3" y="6" width="8" height="14" rx="2" fill={color} />
+          <Rect x="15" y="6" width="8" height="14" rx="2" fill={color} />
+        </Svg>
+      );
+    case 'Plecy':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Path d="M4 6h18v6l-9 8-9-8V6z" fill={color} />
+        </Svg>
+      );
+    case 'Barki':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Circle cx="8" cy="13" r="5" fill={color} />
+          <Circle cx="18" cy="13" r="5" fill={color} />
+        </Svg>
+      );
+    case 'Biceps':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Path d="M6 18c0-4 3-7 7-7h5v6a5 5 0 0 1-5 5H9a3 3 0 0 1-3-3z" fill={color} />
+        </Svg>
+      );
+    case 'Triceps':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Path d="M7 6h12v14H7z" fill={color} />
+        </Svg>
+      );
+    case 'Nogi':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Rect x="6" y="4" width="6" height="18" rx="2" fill={color} />
+          <Rect x="14" y="4" width="6" height="18" rx="2" fill={color} />
+        </Svg>
+      );
+    case 'Brzuch':
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Rect x="7" y="4" width="12" height="18" rx="3" fill={color} />
+          <Rect x="9" y="7" width="8" height="3" rx="1.5" fill="#2f2a40" />
+          <Rect x="9" y="12" width="8" height="3" rx="1.5" fill="#2f2a40" />
+        </Svg>
+      );
+    default:
+      return (
+        <Svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+          <Circle cx="13" cy="13" r="9" stroke={color} strokeWidth="2" />
+        </Svg>
+      );
+  }
 }
 
 const localStyles = StyleSheet.create({
@@ -84,6 +145,9 @@ const localStyles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iconWrap: {
+    marginBottom: 8,
   },
   tileTitle: {
     color: colors.text,
