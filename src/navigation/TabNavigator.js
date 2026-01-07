@@ -10,6 +10,7 @@ import ScreenLayout from '../components/common/ScreenLayout';
 import WorkoutsStack from './WorkoutsStack';
 import HistoryScreen from '../screens/History/HistoryScreen';
 import ExerciseLibraryScreen from '../screens/Library/ExerciseLibraryScreen';
+import TimersScreen from '../screens/Timers/TimersScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -192,7 +193,7 @@ export default function TabNavigator() {
         )}
       </Tab.Screen>
       <Tab.Screen name="Historia" component={HistoryScreen} />
-      <Tab.Screen name="Timery" children={() => <PlaceholderScreen label="Timery" />} />
+      <Tab.Screen name="Timery" component={TimersScreen} />
       <Tab.Screen name="Metryki" children={() => <PlaceholderScreen label="Metryki ciala" />} />
       <Tab.Screen name="Statystyki" children={() => <PlaceholderScreen label="Statystyki" />} />
     </Tab.Navigator>
