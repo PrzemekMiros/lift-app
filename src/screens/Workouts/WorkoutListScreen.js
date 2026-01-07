@@ -4,9 +4,12 @@ import ScreenLayout from '../../components/common/ScreenLayout';
 import styles from './styles';
 
 function formatDuration(totalSeconds = 0) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${minutes}.${String(seconds).padStart(2, '0')} min`;
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  if (hours > 0) {
+    return `${hours}h ${minutes}min`;
+  }
+  return `${minutes}min`;
 }
 
 export default function WorkoutListScreen({ navigation, workouts, setWorkouts }) {
@@ -35,9 +38,11 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
               <View>
                 <View style={styles.cardTop}>
                   <Text style={styles.cardTitle}>{item.date}</Text>
-                  <Text style={styles.cardDuration}>
-                    {formatDuration(item.durationSeconds || 0)}
-                  </Text>
+                  {item.completedAt && item.durationSeconds ? (
+                    <Text style={styles.cardDuration}>
+                      {formatDuration(item.durationSeconds)}
+                    </Text>
+                  ) : null}
                 </View>
                 <Text style={styles.cardSub}>{item.exercises.length} cwiczen</Text>
               </View>
@@ -56,6 +61,7 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
               date: new Date().toLocaleDateString('pl-PL'),
               exercises: [],
               durationSeconds: 0,
+              completedAt: null,
             };
             setWorkouts([newWorkout, ...workouts]);
           }}

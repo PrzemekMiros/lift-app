@@ -34,22 +34,6 @@ export default function WorkoutScreen({
     React.useCallback(() => {
       startedAtRef.current = Date.now();
       return () => {
-        if (!startedAtRef.current) {
-          return;
-        }
-        const elapsed = Math.floor((Date.now() - startedAtRef.current) / 1000);
-        if (elapsed > 0) {
-          setWorkouts((prev) =>
-            prev.map((item) =>
-              item.id === workoutId
-                ? {
-                    ...item,
-                    durationSeconds: (item.durationSeconds || 0) + elapsed,
-                  }
-                : item,
-            ),
-          );
-        }
         startedAtRef.current = null;
       };
     }, [setWorkouts, workoutId]),
@@ -61,7 +45,33 @@ export default function WorkoutScreen({
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButtonContainer}>
           <Text style={styles.backLink}>&lt;- Lista treningow</Text>
         </TouchableOpacity>
-        <Text style={styles.header}>{workout?.date}</Text>
+        <View style={styles.workoutHeaderRow}>
+          <Text style={styles.header}>{workout?.date}</Text>
+          <TouchableOpacity
+            style={styles.finishBtn}
+            onPress={() => {
+              if (!startedAtRef.current) {
+                startedAtRef.current = Date.now();
+              }
+              const elapsed = Math.floor((Date.now() - startedAtRef.current) / 1000);
+              setWorkouts((prev) =>
+                prev.map((item) =>
+                  item.id === workoutId
+                    ? {
+                        ...item,
+                        durationSeconds: elapsed,
+                        completedAt: new Date().toISOString(),
+                      }
+                    : item,
+                ),
+              );
+              startedAtRef.current = null;
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.finishBtnText}>Zakoncz</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity style={styles.outlineBtn} onPress={() => setShowDbModal(true)}>
           <Text style={styles.outlineBtnText}>+ DODAJ CWICZENIE</Text>
         </TouchableOpacity>

@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   time: {
-    color: colors.primary,
+    color: colors.accent,
     fontSize: 32,
     fontWeight: '500',
     fontFamily: fonts.medium,

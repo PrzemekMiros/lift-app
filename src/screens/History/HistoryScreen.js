@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   calendarNavText: {
-    color: colors.primary,
+    color: colors.accent,
     fontWeight: '500',
     fontFamily: fonts.medium,
   },

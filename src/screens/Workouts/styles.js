@@ -13,13 +13,31 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginBottom: 12,
   },
+  workoutHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  finishBtn: {
+    backgroundColor: colors.accent,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+  },
+  finishBtnText: {
+    color: '#201c2b',
+    fontWeight: '500',
+    fontFamily: fonts.medium,
+    fontSize: 12,
+  },
   backButtonContainer: {
     marginTop: 6,
     marginBottom: 8,
     paddingVertical: 8,
   },
   backLink: {
-    color: colors.primary,
+    color: colors.accent,
     fontWeight: '500',
     fontSize: 14,
   },
@@ -55,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   cardArrow: {
-    color: colors.primary,
+    color: colors.accent,
   },
   listContent: {
     paddingBottom: 120,
@@ -81,14 +99,14 @@ const styles = StyleSheet.create({
   outlineBtn: {
     borderStyle: 'dashed',
     borderWidth: 1,
-    borderColor: colors.primary,
+    borderColor: colors.accent,
     padding: 15,
     borderRadius: 12,
     marginBottom: 16,
     alignItems: 'center',
   },
   outlineBtnText: {
-    color: colors.primary,
+    color: colors.accent,
     fontWeight: '500',
   },
   input: {

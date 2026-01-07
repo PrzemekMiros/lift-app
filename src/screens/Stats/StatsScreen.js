@@ -73,8 +73,8 @@ export default function StatsScreen() {
         <View style={styles.chartBox}>
           <Text style={styles.chartTitle}>Ciezar w czasie</Text>
           <Svg width={chartWidth} height={chartHeight} viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
-            <Path d={path} stroke={colors.primary} strokeWidth={3} fill="none" />
-            <Circle cx={lastX} cy={lastY} r={4} fill={colors.primary} />
+            <Path d={path} stroke={colors.accent} strokeWidth={3} fill="none" />
+            <Circle cx={lastX} cy={lastY} r={4} fill={colors.accent} />
           </Svg>
         </View>
       </View>

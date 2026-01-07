@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import styles from './styles';
 import colors from '../../constants/colors';
@@ -18,32 +17,6 @@ export default function ExerciseScreen({
   const { workoutId, exerciseId } = route.params;
   const workout = workouts.find((item) => item.id === workoutId);
   const exercise = workout?.exercises?.find((item) => item.id === exerciseId);
-  const startedAtRef = useRef(null);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      startedAtRef.current = Date.now();
-      return () => {
-        if (!startedAtRef.current) {
-          return;
-        }
-        const elapsed = Math.floor((Date.now() - startedAtRef.current) / 1000);
-        if (elapsed > 0) {
-          setWorkouts((prev) =>
-            prev.map((item) =>
-              item.id === workoutId
-                ? {
-                    ...item,
-                    durationSeconds: (item.durationSeconds || 0) + elapsed,
-                  }
-                : item,
-            ),
-          );
-        }
-        startedAtRef.current = null;
-      };
-    }, [setWorkouts, workoutId]),
-  );
 
   return (
     <ScreenLayout>
