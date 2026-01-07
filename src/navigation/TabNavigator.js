@@ -11,6 +11,7 @@ import WorkoutsStack from './WorkoutsStack';
 import HistoryScreen from '../screens/History/HistoryScreen';
 import ExerciseLibraryScreen from '../screens/Library/ExerciseLibraryScreen';
 import TimersScreen from '../screens/Timers/TimersScreen';
+import StatsScreen from '../screens/Stats/StatsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -195,7 +196,7 @@ export default function TabNavigator() {
       <Tab.Screen name="Historia" component={HistoryScreen} />
       <Tab.Screen name="Timery" component={TimersScreen} />
       <Tab.Screen name="Metryki" children={() => <PlaceholderScreen label="Metryki ciala" />} />
-      <Tab.Screen name="Statystyki" children={() => <PlaceholderScreen label="Statystyki" />} />
+      <Tab.Screen name="Statystyki" component={StatsScreen} />
     </Tab.Navigator>
   );
 }

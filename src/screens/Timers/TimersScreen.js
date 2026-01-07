@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import colors from '../../constants/colors';
+import { fonts } from '../../constants/theme';
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 22,
     fontWeight: '500',
+    fontFamily: fonts.medium,
     color: colors.text,
     marginBottom: 12,
   },
@@ -162,17 +164,19 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 14,
     fontWeight: '500',
+    fontFamily: fonts.medium,
     marginBottom: 8,
   },
   time: {
     color: colors.text,
     fontSize: 32,
     fontWeight: '500',
+    fontFamily: fonts.medium,
     marginBottom: 12,
   },
   row: {
     flexDirection: 'row',
-    gap: 10,
+    columnGap: 10,
     marginBottom: 10,
   },
   button: {
@@ -189,6 +193,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#201c2b',
     fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   buttonSecondary: {
     backgroundColor: '#2b263a',
@@ -201,6 +206,7 @@ const styles = StyleSheet.create({
   buttonTextSecondary: {
     color: colors.text,
     fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   input: {
     backgroundColor: '#2b263a',
@@ -208,7 +214,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderRadius: 10,
-    flex: 1,
+    width: '48%',
     textAlign: 'center',
+    fontFamily: fonts.medium,
   },
 });
