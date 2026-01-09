@@ -195,7 +195,13 @@ export default function TabNavigator() {
     >
       <Tab.Screen name="Treningi">
         {(props) => (
-          <WorkoutsStack {...props} exerciseDb={exerciseDb} setExerciseDb={setExerciseDb} />
+          <WorkoutsStack
+            {...props}
+            exerciseDb={exerciseDb}
+            setExerciseDb={setExerciseDb}
+            exerciseGroups={exerciseGroups}
+            setExerciseGroups={setExerciseGroups}
+          />
         )}
       </Tab.Screen>
       <Tab.Screen name="Baza">

@@ -12,7 +12,12 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-export default function WorkoutsStack({ exerciseDb, setExerciseDb }) {
+export default function WorkoutsStack({
+  exerciseDb,
+  setExerciseDb,
+  exerciseGroups,
+  setExerciseGroups,
+}) {
   const [workouts, setWorkouts] = useState([]);
   const [showDbModal, setShowDbModal] = useState(false);
   const [newDbEx, setNewDbEx] = useState('');
@@ -41,7 +46,13 @@ export default function WorkoutsStack({ exerciseDb, setExerciseDb }) {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="WorkoutList">
         {(props) => (
-          <WorkoutListScreen {...props} workouts={workouts} setWorkouts={setWorkouts} />
+          <WorkoutListScreen
+            {...props}
+            workouts={workouts}
+            setWorkouts={setWorkouts}
+            exerciseDb={exerciseDb}
+            exerciseGroups={exerciseGroups}
+          />
         )}
       </Stack.Screen>
       <Stack.Screen name="Workout">
@@ -52,6 +63,8 @@ export default function WorkoutsStack({ exerciseDb, setExerciseDb }) {
             setWorkouts={setWorkouts}
             exerciseDb={exerciseDb}
             setExerciseDb={setExerciseDb}
+            exerciseGroups={exerciseGroups}
+            setExerciseGroups={setExerciseGroups}
             showDbModal={showDbModal}
             setShowDbModal={setShowDbModal}
             newDbEx={newDbEx}

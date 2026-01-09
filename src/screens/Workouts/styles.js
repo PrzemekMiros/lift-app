@@ -203,6 +203,53 @@ export const createStyles = (colors) =>
     marginTop: 40,
     paddingHorizontal: 20,
   },
+  modalBackRow: {
+    paddingHorizontal: 20,
+    marginBottom: 8,
+  },
+  groupGridRow: {
+    gap: 10,
+  },
+  groupListContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+  },
+  groupTile: {
+    flex: 1,
+    aspectRatio: 1,
+    backgroundColor: colors.card,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  groupTileSelected: {
+    borderColor: colors.accent,
+  },
+  groupIconWrap: {
+    marginBottom: 8,
+    width: '60%',
+    height: '60%',
+  },
+  groupIconImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  groupTileTitle: {
+    color: colors.text,
+    fontSize: 12,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  groupTileMeta: {
+    color: colors.muted,
+    fontSize: 10,
+    marginTop: 6,
+  },
   modalRow: {
     paddingHorizontal: 20,
   },
@@ -217,9 +264,19 @@ export const createStyles = (colors) =>
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
+  dbItemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
   dbItemText: {
     color: colors.text,
     fontSize: 16,
+  },
+  dbItemMeta: {
+    color: colors.muted,
+    fontSize: 12,
   },
   addSmall: {
     backgroundColor: 'transparent',
