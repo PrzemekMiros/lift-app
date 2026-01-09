@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   LayoutAnimation,
   Modal,
   Image,
+  Animated,
 } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
 import { useThemeColors } from '../../constants/colors';
@@ -34,6 +35,8 @@ export default function WorkoutListScreen({
   const styles = useMemo(() => createStyles(colors), [colors]);
   const [showGroupModal, setShowGroupModal] = useState(false);
   const [selectedGroups, setSelectedGroups] = useState([]);
+  const [isModalMounted, setIsModalMounted] = useState(false);
+  const modalOpacity = useRef(new Animated.Value(0)).current;
 
   const grouped = useMemo(() => {
     const counts = GROUP_ORDER.reduce((acc, group) => {
@@ -52,6 +55,27 @@ export default function WorkoutListScreen({
       count: counts[group] || 0,
     }));
   }, [exerciseDb, exerciseGroups]);
+
+  useEffect(() => {
+    if (showGroupModal) {
+      setIsModalMounted(true);
+      Animated.timing(modalOpacity, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+    Animated.timing(modalOpacity, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) {
+        setIsModalMounted(false);
+      }
+    });
+  }, [modalOpacity, showGroupModal]);
 
   return (
     <ScreenLayout>
@@ -97,13 +121,17 @@ export default function WorkoutListScreen({
                 </View>
                 <Text style={styles.cardSub}>{item.exercises.length} cwiczen</Text>
               </View>
-              <Text style={styles.cardArrow}>&gt;</Text>
+              <View style={styles.cardGroupIcons}>
+                {(item.selectedGroups || []).map((group) => (
+                  <Image key={`${item.id}-${group}`} source={getGroupImage(group)} style={styles.cardGroupIcon} />
+                ))}
+              </View>
             </TouchableOpacity>
           )}
         />
       </View>
-      <Modal visible={showGroupModal} animationType="slide" transparent>
-        <View style={styles.modalContent}>
+      <Modal visible={isModalMounted} animationType="none" transparent>
+        <Animated.View style={[styles.modalContent, { opacity: modalOpacity }]}>
           <Text style={[styles.header, styles.modalHeader]}>Wybierz grupe miesni</Text>
           <FlatList
             data={grouped}
@@ -161,7 +189,7 @@ export default function WorkoutListScreen({
           >
             <Text style={styles.closeBtnText}>ZAMKNIJ</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </Modal>
     </ScreenLayout>
   );

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   Modal,
   ScrollView,
   TextInput,
-  Image,
+  Animated,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import ScreenLayout from '../../components/common/ScreenLayout';
@@ -34,7 +34,8 @@ export default function WorkoutScreen({
   const { workoutId } = route.params;
   const workout = workouts.find((item) => item.id === workoutId);
   const startedAtRef = useRef(null);
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [isModalMounted, setIsModalMounted] = useState(false);
+  const modalOpacity = useRef(new Animated.Value(0)).current;
 
   const allowedGroups = useMemo(() => {
     const selected = workout?.selectedGroups;
@@ -44,33 +45,12 @@ export default function WorkoutScreen({
     return GROUP_ORDER.filter((group) => selected.includes(group));
   }, [workout?.selectedGroups]);
 
-  const grouped = useMemo(() => {
-    const counts = allowedGroups.reduce((acc, group) => {
-      acc[group] = 0;
-      return acc;
-    }, {});
-    exerciseDb.forEach((name) => {
-      const group = exerciseGroups[name] || 'Inne';
-      if (counts[group] === undefined) {
-        counts[group] = 0;
-      }
-      counts[group] += 1;
-    });
-    return allowedGroups.map((group) => ({
-      title: group,
-      count: counts[group] || 0,
-    }));
-  }, [allowedGroups, exerciseDb, exerciseGroups]);
-
-  const groupExercises = useMemo(() => {
-    if (!selectedGroup) {
-      return [];
-    }
+  const allowedExercises = useMemo(() => {
     return exerciseDb.filter((name) => {
       const mapped = exerciseGroups[name] || 'Inne';
-      return mapped === selectedGroup;
+      return allowedGroups.includes(mapped);
     });
-  }, [exerciseDb, exerciseGroups, selectedGroup]);
+  }, [allowedGroups, exerciseDb, exerciseGroups]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -80,6 +60,27 @@ export default function WorkoutScreen({
       };
     }, [setWorkouts, workoutId]),
   );
+
+  useEffect(() => {
+    if (showDbModal) {
+      setIsModalMounted(true);
+      Animated.timing(modalOpacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+    Animated.timing(modalOpacity, {
+      toValue: 0,
+      duration: 100,
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) {
+        setIsModalMounted(false);
+      }
+    });
+  }, [modalOpacity, showDbModal]);
 
   return (
     <ScreenLayout>
@@ -117,7 +118,6 @@ export default function WorkoutScreen({
         <TouchableOpacity
           style={styles.outlineBtn}
           onPress={() => {
-            setSelectedGroup(null);
             setShowDbModal(true);
           }}
         >
@@ -150,130 +150,51 @@ export default function WorkoutScreen({
           )}
         />
       </View>
-      <Modal visible={showDbModal} animationType="slide" transparent>
-        <View style={styles.modalContent}>
+      <Modal visible={isModalMounted} animationType="none" transparent>
+        <Animated.View style={[styles.modalContent, { opacity: modalOpacity }]}>
           <Text style={[styles.header, styles.modalHeader]}>
-            {selectedGroup ? selectedGroup : 'Wybierz grupe miesni'}
+            Wybierz cwiczenie
           </Text>
-          {selectedGroup ? (
-            <>
+          <ScrollView contentContainerStyle={styles.dbList}>
+            {allowedExercises.map((exercise) => (
               <TouchableOpacity
-                style={styles.modalBackRow}
+                key={exercise}
+                style={styles.dbItem}
                 onPress={() => {
-                  setSelectedGroup(null);
+                  const updated = workouts.map((w) =>
+                    w.id === workoutId
+                      ? {
+                          ...w,
+                          exercises: [
+                            ...w.exercises,
+                            { id: Date.now(), name: exercise, sets: [] },
+                          ],
+                        }
+                      : w,
+                  );
+                  setWorkouts(updated);
+                  setShowDbModal(false);
+                }}
+                onLongPress={() => {
+                  if (!DEFAULT_EXERCISES.includes(exercise)) {
+                    setExerciseDb(exerciseDb.filter((item) => item !== exercise));
+                  }
                 }}
               >
-                <Text style={styles.backLink}>&lt;- Wybierz grupe</Text>
+                <Text style={styles.dbItemText}>{exercise}</Text>
               </TouchableOpacity>
-              <View style={[styles.row, styles.modalRow]}>
-                <TextInput
-                  style={[styles.input, styles.modalInput]}
-                  placeholder="Nowe cwiczenie..."
-                  placeholderTextColor={colors.muted}
-                  value={newDbEx}
-                  onChangeText={setNewDbEx}
-                />
-                <TouchableOpacity
-                  style={styles.addSmall}
-                  onPress={() => {
-                    const trimmed = newDbEx.trim();
-                    if (trimmed && !exerciseDb.includes(trimmed)) {
-                      setExerciseDb([...exerciseDb, trimmed]);
-                      setExerciseGroups({ ...exerciseGroups, [trimmed]: selectedGroup });
-                    }
-                    setNewDbEx('');
-                  }}
-                >
-                  <Text style={styles.addSmallText}>+</Text>
-                </TouchableOpacity>
-              </View>
-              <ScrollView contentContainerStyle={styles.dbList}>
-                {groupExercises.map((exercise) => (
-                  <TouchableOpacity
-                    key={exercise}
-                    style={styles.dbItem}
-                    onPress={() => {
-                      const updated = workouts.map((w) =>
-                        w.id === workoutId
-                          ? {
-                              ...w,
-                              exercises: [
-                                ...w.exercises,
-                                { id: Date.now(), name: exercise, sets: [] },
-                              ],
-                            }
-                          : w,
-                      );
-                      setWorkouts(updated);
-                      setSelectedGroup(null);
-                      setShowDbModal(false);
-                    }}
-                    onLongPress={() => {
-                      if (!DEFAULT_EXERCISES.includes(exercise)) {
-                        setExerciseDb(exerciseDb.filter((item) => item !== exercise));
-                      }
-                    }}
-                  >
-                    <Text style={styles.dbItemText}>{exercise}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </>
-          ) : (
-            <FlatList
-              data={grouped}
-              keyExtractor={(item) => item.title}
-              numColumns={2}
-              columnWrapperStyle={styles.groupGridRow}
-              contentContainerStyle={styles.groupListContent}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.groupTile}
-                  onPress={() => setSelectedGroup(item.title)}
-                >
-                  <View style={styles.groupIconWrap}>
-                    <Image source={getGroupImage(item.title)} style={styles.groupIconImage} />
-                  </View>
-                  <Text style={styles.groupTileTitle}>{item.title}</Text>
-                  <Text style={styles.groupTileMeta}>{item.count} cwiczen</Text>
-                </TouchableOpacity>
-              )}
-            />
-          )}
+            ))}
+          </ScrollView>
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
-              setSelectedGroup(null);
               setShowDbModal(false);
             }}
           >
             <Text style={styles.closeBtnText}>ZAMKNIJ</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </Modal>
     </ScreenLayout>
   );
-}
-
-function getGroupImage(group) {
-  switch (group) {
-    case 'Klatka':
-      return require('../../assets/baza-cwiczen-klatka.png');
-    case 'Plecy':
-      return require('../../assets/baza-cwiczen-plecy.png');
-    case 'Barki':
-      return require('../../assets/baza-cwiczen-barki.png');
-    case 'Biceps':
-      return require('../../assets/baza-cwiczen-biceps.png');
-    case 'Triceps':
-      return require('../../assets/baza-cwiczen-triceps.png');
-    case 'Nogi':
-      return require('../../assets/baza-cwiczen-nogi.png');
-    case 'Brzuch':
-      return require('../../assets/baza-cwiczen-brzuch.png');
-    case 'Sztuki walki':
-    case 'Inne':
-    default:
-      return require('../../assets/baza-cwiczen-brzuch.png');
-  }
 }

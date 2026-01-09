@@ -20,7 +20,7 @@ export const createStyles = (colors) =>
     gap: 12,
   },
   headerButton: {
-    marginBottom: 12,
+    marginBottom: 15,
     backgroundColor: 'transparent',
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -34,6 +34,9 @@ export const createStyles = (colors) =>
     fontWeight: '500',
     fontFamily: fonts.medium,
     fontSize: 12,
+    lineHeight: 12,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   workoutHeaderRow: {
     flexDirection: 'row',
@@ -56,6 +59,9 @@ export const createStyles = (colors) =>
     fontWeight: '500',
     fontFamily: fonts.medium,
     fontSize: 12,
+    lineHeight: 12,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   backButtonContainer: {
     marginTop: 6,
@@ -95,11 +101,22 @@ export const createStyles = (colors) =>
     fontWeight: '500',
   },
   cardSub: {
+    marginTop: 3,
     color: colors.muted,
-    fontSize: 11,
+    fontSize: 12,
   },
   cardArrow: {
     color: colors.accent,
+  },
+  cardGroupIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  cardGroupIcon: {
+    width: 36,
+    height: 36,
+    resizeMode: 'contain',
   },
   listContent: {
     paddingBottom: 120,
@@ -124,6 +141,9 @@ export const createStyles = (colors) =>
     fontWeight: '500',
     fontFamily: fonts.medium,
     fontSize: 14,
+    lineHeight: 14,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   outlineBtn: {
     borderStyle: 'dashed',
@@ -137,6 +157,8 @@ export const createStyles = (colors) =>
   outlineBtnText: {
     color: colors.accent,
     fontWeight: '500',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   input: {
     backgroundColor: colors.card,
@@ -170,6 +192,8 @@ export const createStyles = (colors) =>
   addBtnText: {
     fontWeight: '500',
     color: colors.accent,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   setRow: {
     flexDirection: 'row',
@@ -294,13 +318,18 @@ export const createStyles = (colors) =>
     fontWeight: '500',
     color: colors.accent,
     fontSize: 18,
+    lineHeight: 18,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   closeBtn: {
     backgroundColor: 'transparent',
     padding: 12,
     borderRadius: 12,
     alignItems: 'center',
-    margin: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: colors.accent,
     borderStyle: 'dashed',
@@ -308,5 +337,7 @@ export const createStyles = (colors) =>
   closeBtnText: {
     color: colors.accent,
     fontWeight: '500',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
 });

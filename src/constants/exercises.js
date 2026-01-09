@@ -42,4 +42,4 @@ export const EXERCISE_GROUPS = {
   'Plank': 'Brzuch',
 };
 
-export const GROUP_ORDER = ['Klatka', 'Plecy', 'Barki', 'Biceps', 'Triceps', 'Nogi', 'Brzuch', 'Sztuki walki', 'Inne'];
+export const GROUP_ORDER = ['Klatka', 'Plecy', 'Barki', 'Biceps', 'Triceps', 'Nogi', 'Brzuch', 'Sztuki walki'];

@@ -184,7 +184,7 @@ const createStyles = (colors) =>
     },
     button: {
       backgroundColor: 'transparent',
-      paddingVertical: 12,
+      paddingVertical: 10,
       paddingHorizontal: 16,
       borderRadius: 10,
       flex: 1,
@@ -200,6 +200,10 @@ const createStyles = (colors) =>
       color: colors.accent,
       fontWeight: '500',
       fontFamily: fonts.medium,
+      fontSize: 14,
+      lineHeight: 25,
+      includeFontPadding: false,
+      textAlignVertical: 'center',
     },
     buttonSecondary: {
       backgroundColor: 'transparent',
@@ -216,6 +220,10 @@ const createStyles = (colors) =>
       color: colors.accent,
       fontWeight: '500',
       fontFamily: fonts.medium,
+      fontSize: 14,
+      lineHeight: 25,
+      includeFontPadding: false,
+      textAlignVertical: 'center',
     },
     input: {
       backgroundColor: colors.input,

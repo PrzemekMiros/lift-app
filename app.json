@@ -21,7 +21,12 @@
     },
     "owner": "przemekm",
     "android": {
-      "package": "com.przemekm.liftappnew"
+      "package": "com.przemekm.liftappnew",
+      "icon": "./src/assets/app-icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/app-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
     }
   }
 }

@@ -117,6 +117,8 @@ const createLocalStyles = (colors) =>
     addBtnText: {
       color: colors.accent,
       fontWeight: '500',
+      includeFontPadding: false,
+      textAlignVertical: 'center',
     },
     listContent: {
       paddingBottom: 24,

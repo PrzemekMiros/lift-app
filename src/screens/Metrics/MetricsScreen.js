@@ -186,6 +186,8 @@ const createStyles = (colors) =>
       color: colors.accent,
       fontWeight: '500',
       fontFamily: fonts.medium,
+      includeFontPadding: false,
+      textAlignVertical: 'center',
     },
     listContent: {
       paddingBottom: 20,
