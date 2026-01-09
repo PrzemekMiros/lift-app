@@ -16,7 +16,25 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
   return (
     <ScreenLayout>
       <View style={styles.workoutInner}>
-        <Text style={styles.header}>Treningi</Text>
+        <View style={styles.headerRow}>
+          <Text style={styles.header}>Treningi</Text>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              const newWorkout = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('pl-PL'),
+                exercises: [],
+                durationSeconds: 0,
+                completedAt: null,
+              };
+              setWorkouts([newWorkout, ...workouts]);
+            }}
+          >
+            <Text style={styles.headerButtonText}>Dodaj trening</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={workouts}
           keyExtractor={(item) => item.id.toString()}
@@ -50,24 +68,6 @@ export default function WorkoutListScreen({ navigation, workouts, setWorkouts })
             </TouchableOpacity>
           )}
         />
-      </View>
-      <View style={styles.bottomAction}>
-        <TouchableOpacity
-          style={styles.bottomButton}
-          onPress={() => {
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-            const newWorkout = {
-              id: Date.now(),
-              date: new Date().toLocaleDateString('pl-PL'),
-              exercises: [],
-              durationSeconds: 0,
-              completedAt: null,
-            };
-            setWorkouts([newWorkout, ...workouts]);
-          }}
-        >
-          <Text style={styles.bottomButtonText}>Dodaj trening</Text>
-        </TouchableOpacity>
       </View>
     </ScreenLayout>
   );

@@ -1,7 +1,7 @@
 const colors = {
   background: '#332e45',
   primary: '#bfff00ff',
-  accent: '#fb9b00ff',
+  accent: '#d7fb00',
   error: '#8a0101',
   text: '#f2f0f5',
   muted: '#c9c4d4',

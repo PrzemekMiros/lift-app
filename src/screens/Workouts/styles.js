@@ -13,6 +13,28 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginBottom: 12,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    marginBottom: 12,
+  },
+  headerButton: {
+    backgroundColor: 'transparent',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.accent,
+    borderStyle: 'dashed',
+  },
+  headerButtonText: {
+    color: colors.accent,
+    fontWeight: '500',
+    fontFamily: fonts.medium,
+    fontSize: 12,
+  },
   workoutHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
