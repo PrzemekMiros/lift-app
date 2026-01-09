@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import styles from './styles';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
+import { createStyles } from './styles';
 import { DEFAULT_EXERCISES } from '../../constants/exercises';
 
 export default function WorkoutScreen({
@@ -26,6 +26,8 @@ export default function WorkoutScreen({
   newDbEx,
   setNewDbEx,
 }) {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { workoutId } = route.params;
   const workout = workouts.find((item) => item.id === workoutId);
   const startedAtRef = useRef(null);

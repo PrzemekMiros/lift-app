@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert, LayoutAnimation } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import styles from './styles';
+import { useThemeColors } from '../../constants/colors';
+import { createStyles } from './styles';
 
 function formatDuration(totalSeconds = 0) {
   const hours = Math.floor(totalSeconds / 3600);
@@ -13,6 +14,9 @@ function formatDuration(totalSeconds = 0) {
 }
 
 export default function WorkoutListScreen({ navigation, workouts, setWorkouts }) {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <ScreenLayout>
       <View style={styles.workoutInner}>

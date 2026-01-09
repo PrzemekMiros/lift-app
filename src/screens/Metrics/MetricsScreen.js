@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
 import { fonts } from '../../constants/theme';
 
 const STORAGE_KEY = 'metrics_v1';
 
 export default function MetricsScreen() {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [entries, setEntries] = useState([]);
   const [weight, setWeight] = useState('');
   const [waist, setWaist] = useState('');
@@ -130,90 +132,91 @@ export default function MetricsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    color: colors.text,
-    marginBottom: 12,
-  },
-  card: {
-    backgroundColor: '#3a3450',
-    borderRadius: 12,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-    marginBottom: 16,
-  },
-  cardTitle: {
-    color: colors.text,
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    marginBottom: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    columnGap: 10,
-    marginBottom: 10,
-  },
-  input: {
-    backgroundColor: '#2b263a',
-    color: colors.text,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    width: '48%',
-    textAlign: 'center',
-  },
-  addBtn: {
-    backgroundColor: 'transparent',
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.accent,
-    borderStyle: 'dashed',
-  },
-  addBtnText: {
-    color: colors.accent,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  listContent: {
-    paddingBottom: 20,
-  },
-  entry: {
-    backgroundColor: '#3a3450',
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-    marginBottom: 10,
-  },
-  entryTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 6,
-  },
-  entryDate: {
-    color: colors.text,
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  entryWeight: {
-    color: colors.accent,
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  entryMeta: {
-    color: colors.muted,
-    fontSize: 12,
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    header: {
+      fontSize: 22,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      color: colors.text,
+      marginBottom: 12,
+    },
+    card: {
+      backgroundColor: colors.card,
+      borderRadius: 12,
+      padding: 16,
+      borderWidth: 1,
+      borderColor: colors.border,
+      marginBottom: 16,
+    },
+    cardTitle: {
+      color: colors.text,
+      fontSize: 14,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      marginBottom: 10,
+    },
+    row: {
+      flexDirection: 'row',
+      columnGap: 10,
+      marginBottom: 10,
+    },
+    input: {
+      backgroundColor: colors.input,
+      color: colors.text,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      borderRadius: 10,
+      width: '48%',
+      textAlign: 'center',
+    },
+    addBtn: {
+      backgroundColor: 'transparent',
+      paddingVertical: 12,
+      borderRadius: 10,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderStyle: 'dashed',
+    },
+    addBtnText: {
+      color: colors.accent,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    listContent: {
+      paddingBottom: 20,
+    },
+    entry: {
+      backgroundColor: colors.card,
+      borderRadius: 12,
+      padding: 14,
+      borderWidth: 1,
+      borderColor: colors.border,
+      marginBottom: 10,
+    },
+    entryTop: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 6,
+    },
+    entryDate: {
+      color: colors.text,
+      fontSize: 14,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    entryWeight: {
+      color: colors.accent,
+      fontSize: 14,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    entryMeta: {
+      color: colors.muted,
+      fontSize: 12,
+    },
+  });

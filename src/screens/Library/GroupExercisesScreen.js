@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
 import { DEFAULT_EXERCISES } from '../../constants/exercises';
-import workoutStyles from '../Workouts/styles';
+import { createStyles } from '../Workouts/styles';
 
 export default function GroupExercisesScreen({
   navigation,
@@ -13,6 +13,9 @@ export default function GroupExercisesScreen({
   exerciseGroups,
   setExerciseGroups,
 }) {
+  const colors = useThemeColors();
+  const workoutStyles = useMemo(() => createStyles(colors), [colors]);
+  const styles = useMemo(() => createLocalStyles(colors), [colors]);
   const { group } = route.params;
   const [newExercise, setNewExercise] = useState('');
   const exercises = useMemo(() => {
@@ -82,44 +85,45 @@ export default function GroupExercisesScreen({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  addRow: {
-    flexDirection: 'row',
-    columnGap: 10,
-    marginBottom: 12,
-  },
-  input: {
-    flex: 1,
-    backgroundColor: '#2b263a',
-    color: colors.text,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-  },
-  addBtn: {
-    backgroundColor: 'transparent',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: colors.accent,
-    borderStyle: 'dashed',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  addBtnText: {
-    color: colors.accent,
-    fontWeight: '500',
-  },
-  listContent: {
-    paddingBottom: 24,
-  },
-  emptyText: {
-    color: colors.muted,
-    textAlign: 'center',
-    marginTop: 12,
-  },
-});
+const createLocalStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    addRow: {
+      flexDirection: 'row',
+      columnGap: 10,
+      marginBottom: 12,
+    },
+    input: {
+      flex: 1,
+      backgroundColor: colors.input,
+      color: colors.text,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      borderRadius: 10,
+    },
+    addBtn: {
+      backgroundColor: 'transparent',
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderStyle: 'dashed',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    addBtnText: {
+      color: colors.accent,
+      fontWeight: '500',
+    },
+    listContent: {
+      paddingBottom: 24,
+    },
+    emptyText: {
+      color: colors.muted,
+      textAlign: 'center',
+      marginTop: 12,
+    },
+  });

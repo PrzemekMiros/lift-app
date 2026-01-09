@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
 import { fonts } from '../../constants/theme';
 
 function formatTime(totalSeconds) {
@@ -11,6 +11,8 @@ function formatTime(totalSeconds) {
 }
 
 export default function TimersScreen() {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [stopwatchRunning, setStopwatchRunning] = useState(false);
   const [stopwatchSeconds, setStopwatchSeconds] = useState(0);
   const stopwatchRef = useRef(null);
@@ -141,87 +143,88 @@ export default function TimersScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    color: colors.text,
-    marginBottom: 12,
-  },
-  card: {
-    backgroundColor: '#3a3450',
-    borderRadius: 12,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-    marginBottom: 16,
-  },
-  cardTitle: {
-    color: colors.text,
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    marginBottom: 8,
-  },
-  time: {
-    color: colors.accent,
-    fontSize: 32,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    marginBottom: 12,
-  },
-  row: {
-    flexDirection: 'row',
-    columnGap: 10,
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: 'transparent',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    flex: 1,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.accent,
-    borderStyle: 'dashed',
-  },
-  buttonMuted: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: colors.accent,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  buttonSecondary: {
-    backgroundColor: 'transparent',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    flex: 1,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.accent,
-    borderStyle: 'dashed',
-  },
-  buttonTextSecondary: {
-    color: colors.accent,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  input: {
-    backgroundColor: '#2b263a',
-    color: colors.text,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    width: '48%',
-    textAlign: 'center',
-    fontFamily: fonts.medium,
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    header: {
+      fontSize: 22,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      color: colors.text,
+      marginBottom: 12,
+    },
+    card: {
+      backgroundColor: colors.card,
+      borderRadius: 12,
+      padding: 16,
+      borderWidth: 1,
+      borderColor: colors.border,
+      marginBottom: 16,
+    },
+    cardTitle: {
+      color: colors.text,
+      fontSize: 14,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      marginBottom: 8,
+    },
+    time: {
+      color: colors.accent,
+      fontSize: 32,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      marginBottom: 12,
+    },
+    row: {
+      flexDirection: 'row',
+      columnGap: 10,
+      marginBottom: 10,
+    },
+    button: {
+      backgroundColor: 'transparent',
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      borderRadius: 10,
+      flex: 1,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderStyle: 'dashed',
+    },
+    buttonMuted: {
+      opacity: 0.7,
+    },
+    buttonText: {
+      color: colors.accent,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    buttonSecondary: {
+      backgroundColor: 'transparent',
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      borderRadius: 10,
+      flex: 1,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderStyle: 'dashed',
+    },
+    buttonTextSecondary: {
+      color: colors.accent,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    input: {
+      backgroundColor: colors.input,
+      color: colors.text,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      borderRadius: 10,
+      width: '48%',
+      textAlign: 'center',
+      fontFamily: fonts.medium,
+    },
+  });

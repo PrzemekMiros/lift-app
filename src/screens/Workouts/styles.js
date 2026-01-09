@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
-import colors from '../../constants/colors';
 import { fonts } from '../../constants/theme';
 
-const styles = StyleSheet.create({
+export const createStyles = (colors) =>
+  StyleSheet.create({
   workoutInner: {
     flex: 1,
   },
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   card: {
-    backgroundColor: '#3a3450',
+    backgroundColor: colors.card,
     padding: 14,
     borderRadius: 12,
     marginBottom: 10,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#4a445f',
+    borderColor: colors.border,
   },
   cardTitle: {
     color: colors.text,
@@ -139,13 +139,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   input: {
-    backgroundColor: '#3a3450',
+    backgroundColor: colors.card,
     color: colors.text,
     padding: 12,
     borderRadius: 12,
   },
   inputSmall: {
-    backgroundColor: '#3a3450',
+    backgroundColor: colors.card,
     color: colors.text,
     padding: 12,
     borderRadius: 12,
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 14,
-    backgroundColor: '#3a3450',
+    backgroundColor: colors.card,
     borderRadius: 12,
     marginBottom: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#4a445f',
+    borderColor: colors.border,
   },
   setText: {
     color: colors.muted,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   dbItem: {
     padding: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#4a445f',
+    borderBottomColor: colors.border,
   },
   dbItemText: {
     color: colors.text,
@@ -253,5 +253,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-
-export default styles;

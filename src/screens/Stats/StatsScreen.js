@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
 
 const STATS = {
   workouts: 2,
@@ -31,6 +31,8 @@ function buildPath(points, width, height) {
 }
 
 export default function StatsScreen() {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const chartWidth = 320;
   const chartHeight = 120;
   const path = buildPath(CHART_POINTS, chartWidth, chartHeight);
@@ -82,67 +84,68 @@ export default function StatsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '500',
-    color: colors.text,
-    marginBottom: 12,
-  },
-  statsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  statCard: {
-    backgroundColor: '#3a3450',
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-    width: '48%',
-    marginBottom: 12,
-  },
-  statLabel: {
-    color: colors.muted,
-    fontSize: 11,
-    marginBottom: 6,
-  },
-  statValue: {
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  motivationBox: {
-    backgroundColor: '#2b263a',
-    borderRadius: 12,
-    padding: 14,
-    marginBottom: 16,
-  },
-  motivationTitle: {
-    color: colors.accent,
-    fontSize: 12,
-    fontWeight: '500',
-    marginBottom: 6,
-  },
-  motivationText: {
-    color: colors.text,
-    fontSize: 14,
-  },
-  chartBox: {
-    backgroundColor: '#3a3450',
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-  },
-  chartTitle: {
-    color: colors.text,
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 10,
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    header: {
+      fontSize: 22,
+      fontWeight: '500',
+      color: colors.text,
+      marginBottom: 12,
+    },
+    statsGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+    },
+    statCard: {
+      backgroundColor: colors.card,
+      borderRadius: 12,
+      padding: 14,
+      borderWidth: 1,
+      borderColor: colors.border,
+      width: '48%',
+      marginBottom: 12,
+    },
+    statLabel: {
+      color: colors.muted,
+      fontSize: 11,
+      marginBottom: 6,
+    },
+    statValue: {
+      color: colors.text,
+      fontSize: 18,
+      fontWeight: '500',
+    },
+    motivationBox: {
+      backgroundColor: colors.input,
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 16,
+    },
+    motivationTitle: {
+      color: colors.accent,
+      fontSize: 12,
+      fontWeight: '500',
+      marginBottom: 6,
+    },
+    motivationText: {
+      color: colors.text,
+      fontSize: 14,
+    },
+    chartBox: {
+      backgroundColor: colors.card,
+      borderRadius: 12,
+      padding: 14,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    chartTitle: {
+      color: colors.text,
+      fontSize: 14,
+      fontWeight: '500',
+      marginBottom: 10,
+    },
+  });

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import colors from '../constants/colors';
+import { useThemeColors } from '../constants/colors';
 import { fonts } from '../constants/theme';
 import { DEFAULT_EXERCISES, EXERCISE_GROUPS } from '../constants/exercises';
 import ScreenLayout from '../components/common/ScreenLayout';
@@ -86,9 +86,9 @@ function StatsIcon({ color }) {
   );
 }
 
-function MenuItem({ label, icon: Icon, active, onPress }) {
+function MenuItem({ label, icon: Icon, onPress, styles, colors }) {
   const color = colors.accent;
-  const labelColor = '#ffffff';
+  const labelColor = colors.text;
 
   return (
     <Pressable style={styles.menuItem} onPress={onPress}>
@@ -102,7 +102,7 @@ function MenuItem({ label, icon: Icon, active, onPress }) {
   );
 }
 
-function BottomMenuBar({ state, navigation }) {
+function BottomMenuBar({ state, navigation, styles, colors }) {
   const scrollRef = useRef(null);
   const scrollX = useRef(0);
 
@@ -135,8 +135,9 @@ function BottomMenuBar({ state, navigation }) {
             key={item.key}
             label={item.label}
             icon={item.icon}
-            active={state.index === index}
             onPress={() => navigation.navigate(item.key)}
+            styles={styles}
+            colors={colors}
           />
         ))}
       </ScrollView>
@@ -144,7 +145,7 @@ function BottomMenuBar({ state, navigation }) {
   );
 }
 
-function PlaceholderScreen({ label }) {
+function PlaceholderScreen({ label, styles }) {
   return (
     <ScreenLayout>
       <View style={styles.placeholderWrap}>
@@ -156,6 +157,8 @@ function PlaceholderScreen({ label }) {
 }
 
 export default function TabNavigator() {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [exerciseDb, setExerciseDb] = useState(DEFAULT_EXERCISES);
   const [exerciseGroups, setExerciseGroups] = useState(EXERCISE_GROUPS);
 
@@ -188,7 +191,7 @@ export default function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
-      tabBar={(props) => <BottomMenuBar {...props} />}
+      tabBar={(props) => <BottomMenuBar {...props} styles={styles} colors={colors} />}
     >
       <Tab.Screen name="Treningi">
         {(props) => (
@@ -214,47 +217,48 @@ export default function TabNavigator() {
   );
 }
 
-const styles = StyleSheet.create({
-  placeholderWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 22,
-    color: colors.text,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: colors.muted,
-  },
-  menuWrapper: {
-    borderTopWidth: 1,
-    borderTopColor: '#4a445f',
-    backgroundColor: colors.surface,
-    paddingVertical: 10,
-  },
-  menuContent: {
-    paddingHorizontal: 12,
-    paddingRight: 16,
-  },
-  menuItem: {
-    width: 70,
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  iconWrap: {
-    width: 36,
-    height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  menuLabel: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.text,
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    placeholderWrap: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    title: {
+      fontSize: 22,
+      color: colors.text,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      marginBottom: 8,
+    },
+    subtitle: {
+      fontSize: 14,
+      color: colors.muted,
+    },
+    menuWrapper: {
+      borderTopWidth: 1,
+      borderTopColor: colors.border,
+      backgroundColor: colors.surface,
+      paddingVertical: 10,
+    },
+    menuContent: {
+      paddingHorizontal: 12,
+      paddingRight: 16,
+    },
+    menuItem: {
+      width: 70,
+      alignItems: 'center',
+      marginRight: 10,
+    },
+    iconWrap: {
+      width: 36,
+      height: 36,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    menuLabel: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.text,
+    },
+  });

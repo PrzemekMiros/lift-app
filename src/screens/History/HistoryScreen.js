@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
 import { fonts } from '../../constants/theme';
 
 const WEEKDAYS = ['Pn', 'Wt', 'Sr', 'Cz', 'Pt', 'So', 'Nd'];
@@ -51,6 +51,8 @@ function getMonthMatrix(year, month) {
 }
 
 export default function HistoryScreen() {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [monthCursor, setMonthCursor] = useState(() => new Date());
   const [markedDates, setMarkedDates] = useState(new Set());
 
@@ -147,83 +149,85 @@ export default function HistoryScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-    color: colors.text,
-    marginBottom: 15,
-  },
-  calendarHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  calendarTitle: {
-    color: colors.text,
-    fontSize: 16,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  calendarNav: {
-    width: 48,
-    height: 48,
-    borderRadius: 6,
-    backgroundColor: colors.surface,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calendarNavText: {
-    color: colors.accent,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  calendarWeekRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  calendarWeekText: {
-    width: '14.285%',
-    textAlign: 'center',
-    color: colors.muted,
-    fontSize: 12,
-  },
-  calendarGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  calendarCell: {
-    width: '14.285%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calendarDay: {
-    width: '100%',
-    height: '100%',
-    paddingVertical: 16,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calendarDayMarked: {
-    backgroundColor: colors.accent,
-    borderColor: colors.accent,
-  },
-  calendarDayText: {
-    color: colors.text,
-    fontSize: 13,
-    fontWeight: '500',
-    fontFamily: fonts.medium,
-  },
-  calendarDayTextMarked: {
-    color: colors.background,
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    header: {
+      fontSize: 22,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+      color: colors.text,
+      marginBottom: 15,
+    },
+    calendarHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 16,
+    },
+    calendarTitle: {
+      color: colors.text,
+      fontSize: 16,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    calendarNav: {
+      width: 48,
+      height: 48,
+      borderRadius: 6,
+      backgroundColor: colors.surface,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    calendarNavText: {
+      color: colors.accent,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    calendarWeekRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 8,
+    },
+    calendarWeekText: {
+      width: '14.285%',
+      textAlign: 'center',
+      color: colors.muted,
+      fontSize: 12,
+    },
+    calendarGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    calendarCell: {
+      width: '14.285%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    calendarDay: {
+      width: '100%',
+      height: 50,
+      paddingVertical: 16,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: colors.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.surface,
+    },
+    calendarDayMarked: {
+      backgroundColor: colors.accent,
+      borderColor: colors.accent,
+    },
+    calendarDayText: {
+      color: colors.text,
+      fontSize: 13,
+      fontWeight: '500',
+      fontFamily: fonts.medium,
+    },
+    calendarDayTextMarked: {
+      color: colors.onAccent,
+    },
+  });

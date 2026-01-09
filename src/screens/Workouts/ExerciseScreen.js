@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import styles from './styles';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
+import { createStyles } from './styles';
 
 export default function ExerciseScreen({
   navigation,
@@ -14,6 +14,8 @@ export default function ExerciseScreen({
   weight,
   setWeight,
 }) {
+  const colors = useThemeColors();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const { workoutId, exerciseId } = route.params;
   const workout = workouts.find((item) => item.id === workoutId);
   const exercise = workout?.exercises?.find((item) => item.id === exerciseId);

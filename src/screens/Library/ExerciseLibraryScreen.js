@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import ScreenLayout from '../../components/common/ScreenLayout';
-import styles from '../Workouts/styles';
-import colors from '../../constants/colors';
+import { useThemeColors } from '../../constants/colors';
+import { createStyles } from '../Workouts/styles';
 import { GROUP_ORDER } from '../../constants/exercises';
 
 export default function ExerciseLibraryScreen({
@@ -10,6 +10,9 @@ export default function ExerciseLibraryScreen({
   exerciseDb,
   exerciseGroups,
 }) {
+  const colors = useThemeColors();
+  const workoutStyles = useMemo(() => createStyles(colors), [colors]);
+  const localStyles = useMemo(() => createLocalStyles(colors), [colors]);
   const grouped = useMemo(() => {
     const groups = {};
     exerciseDb.forEach((name) => {
@@ -27,8 +30,8 @@ export default function ExerciseLibraryScreen({
 
   return (
     <ScreenLayout>
-      <View style={styles.workoutInner}>
-        <Text style={styles.header}>Baza ćwiczeń</Text>
+      <View style={workoutStyles.workoutInner}>
+        <Text style={workoutStyles.header}>Baza ćwiczeń</Text>
         <FlatList
           data={grouped}
           keyExtractor={(item) => item.title}
@@ -76,44 +79,45 @@ function getGroupImage(group) {
   }
 }
 
-const localStyles = StyleSheet.create({
-  gridRow: {
-    gap: 10,
-  },
-  listContent: {
-    paddingBottom: 24,
-  },
-  tile: {
-    flex: 1,
-    aspectRatio: 1,
-    backgroundColor: '#3a3450',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#4a445f',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  iconWrap: {
-    marginBottom: 8,
-    width: '60%',
-    height: '60%',
-  },
-  iconImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-  tileTitle: {
-    color: colors.text,
-    fontSize: 12,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  tileMeta: {
-    color: colors.muted,
-    fontSize: 10,
-    marginTop: 6,
-  },
-});
+const createLocalStyles = (colors) =>
+  StyleSheet.create({
+    gridRow: {
+      gap: 10,
+    },
+    listContent: {
+      paddingBottom: 24,
+    },
+    tile: {
+      flex: 1,
+      aspectRatio: 1,
+      backgroundColor: colors.card,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: colors.border,
+      padding: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    iconWrap: {
+      marginBottom: 8,
+      width: '60%',
+      height: '60%',
+    },
+    iconImage: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'contain',
+    },
+    tileTitle: {
+      color: colors.text,
+      fontSize: 12,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    tileMeta: {
+      color: colors.muted,
+      fontSize: 10,
+      marginTop: 6,
+    },
+  });
