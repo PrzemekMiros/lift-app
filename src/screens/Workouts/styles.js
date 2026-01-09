@@ -7,20 +7,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    marginBottom: 12,
     fontSize: 22,
     fontWeight: '500',
     fontFamily: fonts.medium,
     color: colors.text,
-    marginBottom: 12,
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 12,
-    marginBottom: 12,
   },
   headerButton: {
+    marginBottom: 12,
     backgroundColor: 'transparent',
     paddingVertical: 8,
     paddingHorizontal: 12,

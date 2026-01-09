@@ -15,10 +15,10 @@ import MetricsScreen from '../screens/Metrics/MetricsScreen';
 import LibraryStack from './LibraryStack';
 
 const Tab = createBottomTabNavigator();
-
+ 
 const MENU_ITEMS = [
   { key: 'Treningi', label: 'Treningi', icon: WorkoutsIcon },
-  { key: 'Baza', label: 'Baza ćwiczeń', icon: LibraryIcon },
+  { key: 'Baza', label: 'Ćwiczenia', icon: LibraryIcon },
   { key: 'Historia', label: 'Historia', icon: HistoryIcon },
   { key: 'Timery', label: 'Timery', icon: TimerIcon },
   { key: 'Metryki', label: 'Metryki ciała', icon: MetricsIcon },
@@ -88,13 +88,14 @@ function StatsIcon({ color }) {
 
 function MenuItem({ label, icon: Icon, active, onPress }) {
   const color = colors.accent;
+  const labelColor = '#ffffff';
 
   return (
     <Pressable style={styles.menuItem} onPress={onPress}>
       <View style={styles.iconWrap}>
         <Icon color={color} />
       </View>
-      <Text style={[styles.menuLabel, { color }]} numberOfLines={1}>
+      <Text style={[styles.menuLabel, { color: labelColor }]} numberOfLines={1}>
         {label}
       </Text>
     </Pressable>
@@ -254,5 +255,6 @@ const styles = StyleSheet.create({
   menuLabel: {
     fontSize: 12,
     fontWeight: '500',
+    color: colors.text,
   },
 });

@@ -16,7 +16,7 @@ export default function ScreenLayout({ children }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.brandRow} pointerEvents="none">
-        <Image source={require('../../assets/app-icon.png')} style={styles.brandIcon} />
+        <Image source={require('../../assets/logo-dark.png')} style={styles.brandIcon} />
         <Text style={styles.brandText}>
           LIFT <Text style={styles.brandTextAccent}>NOTE</Text>
         </Text>
@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 80,
+    paddingTop: 100,
   },
   fade: {
     flex: 1,
   },
   brandRow: {
     position: 'absolute',
-    top: 16,
+    top: 40,
     left: 16,
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lift-note-app",
+    "name": "Lift Note",
     "slug": "appnew",
     "version": "1.0.0",
     "sdkVersion": "50.0.0",
@@ -13,6 +13,7 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "icon": "./src/assets/app-icon.png",
     "extra": {
       "eas": {
         "projectId": "d70f9432-3bcb-4b75-8f36-763adbdd9866"
