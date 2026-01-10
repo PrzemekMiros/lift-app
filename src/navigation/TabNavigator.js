@@ -245,7 +245,9 @@ const createStyles = (colors) =>
       borderTopWidth: 1,
       borderTopColor: colors.border,
       backgroundColor: colors.surface,
-      paddingVertical: 10,
+      paddingTop: 10,
+      paddingBottom: 10,
+      marginBottom: Platform.OS === 'web' ? 50 : 0,
     },
     menuContent: {
       paddingHorizontal: 12,

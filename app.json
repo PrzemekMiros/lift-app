@@ -27,6 +27,11 @@
         "foregroundImage": "./src/assets/app-icon.png",
         "backgroundColor": "#FFFFFF"
       }
+    },
+    "web": {
+      "meta": {
+        "viewport": "width=device-width, initial-scale=1, viewport-fit=cover"
+      }
     }
   }
 }

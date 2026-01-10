@@ -151,7 +151,8 @@ export default function WorkoutScreen({
         />
       </View>
       <Modal visible={isModalMounted} animationType="none" transparent>
-        <Animated.View style={[styles.modalContent, { opacity: modalOpacity }]}>
+        <View style={styles.modalOverlay}>
+          <Animated.View style={[styles.modalContent, { opacity: modalOpacity }]}>
           <Text style={[styles.header, styles.modalHeader]}>
             Wybierz cwiczenie
           </Text>
@@ -193,7 +194,8 @@ export default function WorkoutScreen({
           >
             <Text style={styles.closeBtnText}>ZAMKNIJ</Text>
           </TouchableOpacity>
-        </Animated.View>
+          </Animated.View>
+        </View>
       </Modal>
     </ScreenLayout>
   );

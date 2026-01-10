@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { fonts } from '../../constants/theme';
 
 export const createStyles = (colors) =>
@@ -219,6 +219,22 @@ export const createStyles = (colors) =>
   modalContent: {
     flex: 1,
     backgroundColor: colors.background,
+    ...(Platform.OS === 'web'
+      ? {
+          width: 400,
+          maxWidth: '100%',
+          alignSelf: 'center',
+        }
+      : null),
+  },
+  modalOverlay: {
+    flex: 1,
+    ...(Platform.OS === 'web'
+      ? {
+          alignItems: 'center',
+          backgroundColor: 'transparent',
+        }
+      : null),
   },
   modalHeader: {
     marginTop: 40,

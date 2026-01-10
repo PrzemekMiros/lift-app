@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useMemo } from 'react';
-import { SafeAreaView, View, StyleSheet, Animated } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Animated, Platform } from 'react-native';
 import { useThemeColors } from '../../constants/colors';
 
 export default function ScreenLayout({ children }) {
@@ -34,6 +34,13 @@ const createStyles = (colors) =>
       flex: 1,
       paddingHorizontal: 20,
       paddingTop: 54,
+      ...(Platform.OS === 'web'
+        ? {
+            width: '100%',
+            maxWidth: 400,
+            alignSelf: 'center',
+          }
+        : null),
     },
     fade: {
       flex: 1,
